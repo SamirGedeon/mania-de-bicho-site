@@ -25,8 +25,9 @@ Os Markdown principais estão na pasta `../docs`, também copiados para `docs` n
 
 ## Limites do protótipo
 
-Busca e navegação funcionam; cards abrem detalhes. Sacola, contato e apresentação são demonstrações, sem envio, compra ou reprodução de vídeo. Não foram inventados telefone, horário, endereço, preço ou parceiros reais. Os serviços e textos são sugestões editoriais a validar com a operação da marca.
+Categorias possuem páginas reais com24 produtos fictícios. O carrinho permite adicionar, ajustar, remover e persistir itens no navegador; sem checkout ou pagamento. Contato e apresentação continuam demonstrações, sem envio ou reprodução de vídeo. Veja `docs/CATALOGO_E_CARRINHO.md`. Não foram inventados telefone, horário, endereço, preço ou parceiros reais. Os serviços e textos são sugestões editoriais a validar com a operação da marca.
 
 As faixas de parceiros foram removidas de ambas as páginas. As fotografias originais foram usadas para reproduzir a referência em estudo privado; verificar licença antes de uso comercial. Há prompts para substituir todas as fotos por material novo. As fotos de hero clínico e siamês tiveram o fundo adaptado para verde via ferramenta integrada de geração de imagens.
+
 
 

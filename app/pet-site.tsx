@@ -2,67 +2,17 @@
 /* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
 'use client';
 import { useState } from 'react';
-import {
-  ArrowRight,
-  Bone,
-  ChevronDown,
-  Clock3,
-  Heart,
-  Menu,
-  Play,
-  Search,
-  ShoppingBag,
-} from 'lucide-react';
+import { ArrowRight, Bone, Play } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { SiteHeader, SiteFooter } from '@/components/shop/site-chrome';
+import { categories, categoryHref } from '@/data/products';
+import { services } from '@/data/site-content';
 const asset = (name: string) => `/assets/${name}`;
-const services = [
-  {
-    name: 'Melhor nutrição',
-    tag: 'Sabor e qualidade',
-    image: 'service-dog.webp',
-    text: 'Rações e alimentos para cada fase da vida do seu pet.',
-  },
-  {
-    name: 'Produtos de qualidade',
-    tag: 'Variedade para o dia a dia',
-    image: 'service-cat.webp',
-    text: 'Acessórios, higiene e itens de farmácia pet em um só lugar.',
-  },
-  {
-    name: 'Atendimento especializado',
-    tag: 'Carinho em cada detalhe',
-    image: 'service-rabbit.webp',
-    text: 'Ajuda para escolher produtos e conhecer nosso banho e tosa.',
-  },
-];
-const categories = [
-  {
-    name: 'Rações e alimentos',
-    image: 'category-food.webp',
-    text: 'Alimentação para cada fase da vida.',
-  },
-  {
-    name: 'Brinquedos para pets',
-    image: 'category-toys.webp',
-    text: 'Diversão para a rotina do seu melhor amigo.',
-  },
-  {
-    name: 'Acessórios de passeio',
-    image: 'category-walk.webp',
-    text: 'Conforto e segurança para passear juntos.',
-  },
-  {
-    name: 'Camas e conforto',
-    image: 'category-bed.webp',
-    text: 'Um cantinho aconchegante para descansar.',
-  },
-];
 type Detail = { name: string; text: string; image?: string };
 function Tag({ children }: { children: React.ReactNode }) {
   return (
@@ -74,27 +24,6 @@ function Tag({ children }: { children: React.ReactNode }) {
 }
 export function PetSite({ shop = false }: { shop?: boolean }) {
   const [detail, setDetail] = useState<Detail | null>(null);
-  const [menu, setMenu] = useState(false);
-  const [search, setSearch] = useState(false);
-  const [query, setQuery] = useState('');
-  const contact = () =>
-    setDetail({
-      name: 'Vamos encontrar o melhor para seu pet',
-      text: 'Os canais de atendimento da Mania de Bicho serão disponibilizados aqui em breve.',
-    });
-  const nav = [
-    ['Início', '/'],
-    ['Serviços', '/#servicos'],
-    ['Produtos', '/#cuidados'],
-    ['Loja', '/loja/'],
-    ['Categorias', '/loja/#categorias'],
-    ['Contato', '#contato'],
-  ];
-  const results = [...services, ...categories].filter((x) =>
-    x.name
-      .toLocaleLowerCase('pt-BR')
-      .includes(query.toLocaleLowerCase('pt-BR')),
-  );
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -109,73 +38,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
           }
           fetchPriority="high"
         />
-        <header className="header">
-          <div className="topline">
-            <span>
-              <Heart size={15} /> Carinho em cada detalhe
-            </span>
-            <span>
-              <Clock3 size={16} /> Produtos para todas as fases
-            </span>
-          </div>
-          <div className="nav-shell">
-            <a className="brand" href="/" aria-label="Mania de Bicho, início">
-              <img src={asset('logo.png')} alt="Mania de Bicho" />
-            </a>
-            <nav aria-label="Navegação principal">
-              {nav.map(([label, url], i) => (
-                <a
-                  key={label}
-                  className={(shop ? i === 3 : i === 0) ? 'active' : ''}
-                  href={url}
-                  onClick={
-                    label === 'Contato'
-                      ? (e) => {
-                          e.preventDefault();
-                          contact();
-                        }
-                      : undefined
-                  }
-                >
-                  {label}
-                  {i < 5 && <ChevronDown size={12} />}
-                </a>
-              ))}
-            </nav>
-            <div className="nav-actions">
-              <button
-                className="icon-button"
-                aria-label="Ver sacola"
-                onClick={() =>
-                  setDetail({
-                    name: 'Sua sacola está vazia',
-                    text: 'Explore as categorias da Mania de Bicho. As compras on-line estarão disponíveis em breve.',
-                  })
-                }
-              >
-                <ShoppingBag size={21} />
-                <sup>0</sup>
-              </button>
-              <button
-                className="icon-button"
-                aria-label="Buscar no site"
-                onClick={() => setSearch(true)}
-              >
-                <Search size={21} />
-              </button>
-              <button className="pill cta" onClick={contact}>
-                Fale com a gente
-              </button>
-              <button
-                className="icon-button mobile-toggle"
-                aria-label="Abrir menu"
-                onClick={() => setMenu(true)}
-              >
-                <Menu />
-              </button>
-            </div>
-          </div>
-        </header>
+        <SiteHeader shop={shop} />
         {shop ? (
           <>
             <div className="giant shop-giant" aria-hidden="true">
@@ -296,14 +159,14 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
               </div>
               <div className="categories">
                 {categories.map((c) => (
-                  <button
+                  <a
                     className="category"
                     key={c.name}
-                    onClick={() => setDetail(c)}
+                    href={categoryHref(c.slug)}
                   >
                     <h3>{c.name}</h3>
                     <img loading="lazy" src={asset(c.image)} alt="" />
-                  </button>
+                  </a>
                 ))}
               </div>
             </section>
@@ -417,15 +280,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
           </>
         )}
       </main>
-      <footer id="contato">
-        <a href="/" aria-label="Voltar ao início">
-          <img src={asset('logo.png')} alt="Mania de Bicho" />
-        </a>
-        <p>Carinho em cada detalhe.</p>
-        <button className="pill cta" onClick={contact}>
-          Fale com a gente <ArrowRight size={16} />
-        </button>
-      </footer>
+      <SiteFooter />
       <Dialog
         open={!!detail}
         onOpenChange={(open) => {
@@ -440,56 +295,6 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
           <DialogDescription>{detail?.text}</DialogDescription>
         </DialogContent>
       </Dialog>
-      <Dialog open={search} onOpenChange={setSearch}>
-        <DialogContent className="search-dialog">
-          <DialogTitle>O que você procura?</DialogTitle>
-          <DialogDescription>
-            Busque produtos, serviços e categorias para seu pet.
-          </DialogDescription>
-          <input
-            aria-label="Buscar produtos, serviços e categorias"
-            placeholder="Digite para buscar…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <div className="search-results">
-            {results.length ? (
-              results.map((r) => (
-                <button
-                  key={r.name}
-                  onClick={() => {
-                    setSearch(false);
-                    setDetail(r);
-                  }}
-                >
-                  {r.name}
-                  <ArrowRight size={16} />
-                </button>
-              ))
-            ) : (
-              <p>Nenhum resultado encontrado. Tente outro termo.</p>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-      <Sheet open={menu} onOpenChange={setMenu}>
-        <SheetContent className="mobile-menu">
-          <SheetTitle>Mania de Bicho</SheetTitle>
-          {nav.map(([label, url]) => (
-            <a
-              href={url}
-              key={label}
-              onClick={() => {
-                setMenu(false);
-                if (label === 'Contato') contact();
-              }}
-            >
-              {label}
-              <ArrowRight size={18} />
-            </a>
-          ))}
-        </SheetContent>
-      </Sheet>
     </>
   );
 }

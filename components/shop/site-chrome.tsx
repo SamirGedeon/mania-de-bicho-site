@@ -1,0 +1,214 @@
+/* Native images and links serve the static export. */
+/* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
+'use client';
+import { useState } from 'react';
+import {
+  ArrowRight,
+  ChevronDown,
+  Clock3,
+  Heart,
+  Menu,
+  Search,
+  ShoppingBag,
+} from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { categories, categoryHref, products } from '@/data/products';
+import { services } from '@/data/site-content';
+import { useCart } from './cart-provider';
+
+function ContactDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="detail-dialog">
+        <DialogTitle>Vamos encontrar o melhor para seu pet</DialogTitle>
+        <DialogDescription>
+          Os canais de atendimento da Mania de Bicho serão disponibilizados aqui
+          em breve.
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
+  );
+}
+const nav = [
+  ['Início', '/'],
+  ['Serviços', '/#servicos'],
+  ['Produtos', '/#cuidados'],
+  ['Loja', '/loja/'],
+  ['Categorias', '/loja/#categorias'],
+  ['Contato', '#contato'],
+];
+const searchable = [
+  ...categories.map((c) => ({
+    key: c.slug,
+    name: c.name,
+    href: categoryHref(c.slug),
+  })),
+  ...products.map((p) => ({
+    key: p.id,
+    name: `${p.brand} — ${p.name} · ${p.size}`,
+    href: `${categoryHref(p.category)}#${p.id}`,
+  })),
+  ...services.map((s) => ({ key: s.name, name: s.name, href: '/#servicos' })),
+];
+const normalize = (text: string) =>
+  text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR');
+export function SiteHeader({ shop = false }: { shop?: boolean }) {
+  const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [contact, setContact] = useState(false);
+  const [query, setQuery] = useState('');
+  const { count, openCart } = useCart();
+  const results = searchable.filter((item) =>
+    normalize(item.name).includes(normalize(query.trim())),
+  );
+  return (
+    <>
+      <header className="header">
+        <div className="topline">
+          <span>
+            <Heart size={15} /> Carinho em cada detalhe
+          </span>
+          <span>
+            <Clock3 size={16} /> Produtos para todas as fases
+          </span>
+        </div>
+        <div className="nav-shell">
+          <a className="brand" href="/" aria-label="Mania de Bicho, início">
+            <img src="/assets/logo.png" alt="Mania de Bicho" />
+          </a>
+          <nav aria-label="Navegação principal">
+            {nav.map(([label, href], i) => (
+              <a
+                key={label}
+                className={(shop ? i === 3 : i === 0) ? 'active' : ''}
+                href={href}
+                onClick={
+                  label === 'Contato'
+                    ? (e) => {
+                        e.preventDefault();
+                        setContact(true);
+                      }
+                    : undefined
+                }
+              >
+                {label}
+                {i < 5 && <ChevronDown size={12} />}
+              </a>
+            ))}
+          </nav>
+          <div className="nav-actions">
+            <button
+              className="icon-button cart-trigger"
+              aria-label={`Abrir carrinho, ${count} itens`}
+              onClick={openCart}
+            >
+              <ShoppingBag size={21} />
+              <sup aria-hidden="true">{count}</sup>
+            </button>
+            <button
+              className="icon-button"
+              aria-label="Buscar no site"
+              onClick={() => setSearch(true)}
+            >
+              <Search size={21} />
+            </button>
+            <button className="pill cta" onClick={() => setContact(true)}>
+              Fale com a gente
+            </button>
+            <button
+              className="icon-button mobile-toggle"
+              aria-label="Abrir menu"
+              onClick={() => setMenu(true)}
+            >
+              <Menu />
+            </button>
+          </div>
+        </div>
+      </header>
+      <ContactDialog open={contact} onOpenChange={setContact} />
+      <Dialog open={search} onOpenChange={setSearch}>
+        <DialogContent className="search-dialog">
+          <DialogTitle>O que você procura?</DialogTitle>
+          <DialogDescription>
+            Busque produtos, serviços e categorias para seu pet.
+          </DialogDescription>
+          <input
+            aria-label="Buscar produtos, serviços e categorias"
+            placeholder="Digite para buscar…"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          <div className="search-results">
+            {results.length ? (
+              results.map((item) => (
+                <a
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => setSearch(false)}
+                >
+                  {item.name}
+                  <ArrowRight size={16} />
+                </a>
+              ))
+            ) : (
+              <p>Nenhum resultado encontrado. Tente outro termo.</p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+      <Sheet open={menu} onOpenChange={setMenu}>
+        <SheetContent className="mobile-menu">
+          <SheetTitle>Mania de Bicho</SheetTitle>
+          {nav.map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              onClick={(event) => {
+                setMenu(false);
+                if (label === 'Contato') {
+                  event.preventDefault();
+                  setContact(true);
+                }
+              }}
+            >
+              {label}
+              <ArrowRight size={18} />
+            </a>
+          ))}
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
+export function SiteFooter() {
+  const [contact, setContact] = useState(false);
+  return (
+    <>
+      <footer id="contato">
+        <a href="/" aria-label="Voltar ao início">
+          <img src="/assets/logo.png" alt="Mania de Bicho" />
+        </a>
+        <p>Carinho em cada detalhe.</p>
+        <button className="pill cta" onClick={() => setContact(true)}>
+          Fale com a gente <ArrowRight size={16} />
+        </button>
+      </footer>
+      <ContactDialog open={contact} onOpenChange={setContact} />
+    </>
+  );
+}
