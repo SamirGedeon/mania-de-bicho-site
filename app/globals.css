@@ -374,7 +374,7 @@ input:focus-visible {
 }
 .services {
   display: grid;
-  grid-template-columns: 1.59fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 .service {
@@ -417,9 +417,6 @@ input:focus-visible {
   color: #4b4b4b;
   margin-top: 16px;
   max-width: 295px;
-}
-.service-0 .service-copy {
-  max-width: 51%;
 }
 .arrow-button {
   width: 35px;
@@ -509,25 +506,6 @@ input:focus-visible {
 }
 .feature-overlay button:hover {
   text-decoration: underline;
-}
-.partners {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 35px;
-  padding: 90px 6.4% 30px;
-}
-.partner-logo {
-  display: block;
-  width: 112px;
-  height: 55px;
-  background: var(--action);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 .hero-shop {
   height: 693px;
@@ -665,12 +643,8 @@ input:focus-visible {
   border-color: var(--action);
   box-shadow: 0 5px 20px #5c2d3812;
 }
-.categories-section .partners {
-  padding-top: 94px;
-  padding-bottom: 84px;
-}
 .collections {
-  margin-top: 95px;
+  margin-top: 64px;
   margin-bottom: 94px;
 }
 .collection .card-word {
@@ -939,17 +913,6 @@ footer > .pill {
   .card-word {
     font-size: 34vw;
   }
-  .partners {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    gap: 35px;
-    padding: 55px 24px;
-  }
-  .partner-logo {
-    width: 100px;
-    height: 50px;
-  }
   .hero-shop {
     height: 880px;
   }
@@ -1016,9 +979,6 @@ footer > .pill {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     max-width: 550px;
-  }
-  .categories-section .partners {
-    padding: 55px 24px;
   }
   .collections {
     margin-bottom: 60px;
@@ -1121,13 +1081,6 @@ footer > .pill {
   .feature-overlay button {
     margin-top: 14px;
   }
-  .partners {
-    gap: 25px 15px;
-  }
-  .partner-logo {
-    width: 85px;
-    height: 42px;
-  }
   .shop-copy {
     bottom: 240px;
     max-width: 55%;
@@ -1191,5 +1144,122 @@ footer > .pill {
   *:after {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Consistent feedback without changing the resting layout or palette. */
+:where(a, button, input),
+.pill,
+.circle-cta,
+.service,
+.feature-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+:where(a, button) > svg,
+.play {
+  transition: transform 0.25s ease;
+}
+.product {
+  position: relative;
+}
+.service,
+.product,
+.category,
+.feature-card {
+  transform-origin: center;
+}
+.nav-shell nav a,
+.mobile-menu > a,
+.feature-overlay button {
+  position: relative;
+}
+.nav-shell nav a::after,
+.mobile-menu > a::after,
+.feature-overlay button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+.nav-shell nav a::after {
+  left: 16px;
+  right: 16px;
+  bottom: 7px;
+}
+.feature-overlay button:hover {
+  text-decoration: none;
+}
+.service:focus-within,
+.feature-card:focus-within,
+.product:focus-visible,
+.category:focus-visible {
+  z-index: 2;
+  box-shadow: 0 12px 28px #00000020;
+}
+@media (hover: hover) and (pointer: fine) {
+  .service:hover,
+  .product:hover,
+  .category:hover,
+  .feature-card:hover {
+    z-index: 2;
+    box-shadow: 0 12px 28px #00000020;
+  }
+  .pill:hover,
+  .circle-cta:hover,
+  .arrow-button:hover,
+  .hero-video:hover {
+    box-shadow: 0 8px 20px #00000020;
+  }
+  .icon-button:hover,
+  .search-results button:hover,
+  .mobile-menu > a:hover {
+    color: var(--action);
+  }
+  .nav-shell nav a:hover::after,
+  .mobile-menu > a:hover::after,
+  .feature-overlay button:hover::after {
+    transform: scaleX(1);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .service:hover,
+  .product:hover,
+  .category:hover {
+    transform: scale(1.03);
+  }
+  .feature-card:hover {
+    transform: scale(1.015);
+  }
+  .pill:hover,
+  .circle-cta:hover,
+  .arrow-button:hover,
+  .hero-video:hover,
+  .brand:hover,
+  footer > a:hover,
+  button[data-slot='button']:hover {
+    transform: scale(1.03);
+  }
+  .icon-button:hover > svg {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  .hero-video:hover .play {
+    transform: scale(1.08);
+  }
+  .feature-overlay button:hover > svg,
+  .search-results button:hover > svg,
+  .mobile-menu > a:hover > svg {
+    transform: translateX(3px);
   }
 }

@@ -1,5 +1,19 @@
 # Mania de Bicho — especificação de design
 
+## Revisão vigente — 07/09/2026
+
+Esta revisão substitui as decisões correspondentes da reconstrução inicial descrita abaixo. As medições dos prints permanecem como histórico da referência.
+
+- Negócio: **pet shop**, com rações, acessórios, higiene, itens de farmácia pet e banho e tosa. Textos visíveis, detalhes dos cards, busca e metadados não apresentam serviços médicos.
+- Seção principal: “Rações, produtos e carinho / para o seu melhor amigo”. Cards: “Melhor nutrição”, “Produtos de qualidade” e “Atendimento especializado”, todos com badge, título e descrição curta.
+- Grid desktop: `repeat(3, minmax(0, 1fr))`, gap14 px, altura compartilhada362 px e mesmos ajustes responsivos anteriores. Em até800 px, uma coluna. Não há mais coluna ampliada.
+- Cards de serviço, categoria e produto: hover `scale(1.03)`, transição300 ms ease, sombra suave e z-index2. A escala não altera o espaço ocupado no grid.
+- Cards duplos: scale1.015; botões: scale1.03; ícones: scale1.1/rotação−5°; setas de links: deslocamento3 px. Cores de repouso e imagens mantidas.
+- Menus e links recebem sublinhado animado; animações usam250–300 ms. Badges informativos continuam estáticos, sem sugerir que são clicáveis.
+- Transformações de hover são limitadas a ponteiro preciso e preferência sem redução de movimento. Foco por teclado é preservado; `prefers-reduced-motion` elimina transições e escalas.
+- Componente de parceiros e todo seu CSS removidos da Home e Loja. Após categorias,64 px até coleções no desktop e40 px no celular. Na Home, mantém-se apenas a margem normal do footer, sem espaço residual da faixa.
+- O card antes dedicado a recuperação passa a “As melhores rações e / produtos para seu pet”, badge “Sempre a melhor escolha pro seu pet”. O card acolhedor permanece, com descrição que se refere à loja, sem oferecer hospedagem.
+
 ## 1. Referências, escopo e precisão
 
 Referência visual: [Happy Tails — Pet Care & Veterinary WordPress Theme, WebGeniusLab / Karina Alfimova](https://www.behance.net/gallery/253883069/Happy-Tails-Pet-Care-Veterinary-WordPress-Theme). Conferência técnica: [clínica original](https://wgl-dsites.net/happytails/homepage-1/) e [loja original](https://wgl-dsites.net/happytails/homepage-2/), consultadas em 04/09/2026. Os prints locais prevalecem sobre eventuais alterações da demonstração.
@@ -195,3 +209,4 @@ A implementação teve build de produção e checagem de tipos como validação 
 - As duas rotas responderam HTTP200 no servidor local.
 - Lint global identifica problemas nos componentes genéricos distribuídos com o scaffold Shadcn (não modificados); lint restrito ao código desta implementação é verificado separadamente. Imagens nativas e links HTML são escolhas deliberadas para exportação totalmente estática.
 - Nenhum teste visual automatizado de navegador foi executado.
+

@@ -23,22 +23,22 @@ import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 const asset = (name: string) => `/assets/${name}`;
 const services = [
   {
-    name: 'Diagnósticos modernos',
-    tag: 'Tecnologia avançada',
+    name: 'Melhor nutrição',
+    tag: 'Sabor e qualidade',
     image: 'service-dog.webp',
-    text: 'Cuidado individualizado e atenção em cada etapa da vida do seu melhor amigo.',
+    text: 'Rações e alimentos para cada fase da vida do seu pet.',
   },
   {
-    name: 'Medicina preventiva',
-    tag: 'Cuidado e confiança',
+    name: 'Produtos de qualidade',
+    tag: 'Variedade para o dia a dia',
     image: 'service-cat.webp',
-    text: 'Prevenção, acompanhamento e bem-estar para cães e gatos.',
+    text: 'Acessórios, higiene e itens de farmácia pet em um só lugar.',
   },
   {
-    name: 'Atenção especializada',
+    name: 'Atendimento especializado',
     tag: 'Carinho em cada detalhe',
     image: 'service-rabbit.webp',
-    text: 'Cada pet é único e merece um olhar atento às suas necessidades.',
+    text: 'Ajuda para escolher produtos e conhecer nosso banho e tosa.',
   },
 ];
 const categories = [
@@ -72,23 +72,6 @@ function Tag({ children }: { children: React.ReactNode }) {
     </span>
   );
 }
-function Partners() {
-  return (
-    <div className="partners" aria-label="Marcas ilustrativas da referência">
-      {[1, 2, 3, 4, 5, 6].map((n) => (
-        <span
-          key={n}
-          className="partner-logo"
-          style={{
-            maskImage: `url(${asset(`partner-${n}.webp`)})`,
-            WebkitMaskImage: `url(${asset(`partner-${n}.webp`)})`,
-          }}
-          aria-hidden="true"
-        />
-      ))}
-    </div>
-  );
-}
 export function PetSite({ shop = false }: { shop?: boolean }) {
   const [detail, setDetail] = useState<Detail | null>(null);
   const [menu, setMenu] = useState(false);
@@ -96,13 +79,13 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
   const [query, setQuery] = useState('');
   const contact = () =>
     setDetail({
-      name: 'Vamos cuidar do seu pet',
+      name: 'Vamos encontrar o melhor para seu pet',
       text: 'Os canais de atendimento da Mania de Bicho serão disponibilizados aqui em breve.',
     });
   const nav = [
     ['Início', '/'],
     ['Serviços', '/#servicos'],
-    ['Cuidados', '/#cuidados'],
+    ['Produtos', '/#cuidados'],
     ['Loja', '/loja/'],
     ['Categorias', '/loja/#categorias'],
     ['Contato', '#contato'],
@@ -132,7 +115,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
               <Heart size={15} /> Carinho em cada detalhe
             </span>
             <span>
-              <Clock3 size={16} /> Cuidado em todas as fases
+              <Clock3 size={16} /> Produtos para todas as fases
             </span>
           </div>
           <div className="nav-shell">
@@ -200,7 +183,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
             </div>
             <div className="shop-copy">
               <p>
-                Mais saúde e alegria para os pets.
+                Mais variedade para o seu pet.
                 <br />
                 Mais facilidade e carinho para quem cuida.
                 <br />
@@ -264,17 +247,17 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                 prioridade.
               </h1>
               <p>
-                Todo pet merece carinho e cuidado de verdade,
+                Rações, acessórios e higiene para seu pet,
                 <br />
-                com atenção em cada fase da vida.
+                com variedade e praticidade em cada compra.
               </p>
             </div>
             <button
               className="hero-video"
               onClick={() =>
                 setDetail({
-                  name: 'Cuidado que aproxima',
-                  text: 'Na Mania de Bicho, o bem-estar do seu pet vem primeiro.',
+                  name: 'Seu pet shop de confiança',
+                  text: 'Rações, acessórios, higiene, itens de farmácia pet e banho e tosa: encontre o que precisa na Mania de Bicho.',
                   image: 'video-dog.webp',
                 })
               }
@@ -287,9 +270,9 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                 <Play size={17} fill="currentColor" />
               </span>
               <span>
-                Seu parceiro no
+                Seu parceiro em
                 <br />
-                cuidado pet
+                produtos pet
               </span>
             </button>
             <a href="#servicos" className="circle-cta">
@@ -323,7 +306,6 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                   </button>
                 ))}
               </div>
-              <Partners />
             </section>
             <section className="double-grid collections" id="colecoes">
               {[
@@ -366,11 +348,11 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
           <>
             <section id="servicos" className="services-section">
               <div className="section-heading">
-                <Tag>A saúde do seu pet em primeiro lugar</Tag>
+                <Tag>O melhor para o dia a dia do seu pet</Tag>
                 <h2>
-                  Cuidado especializado para
+                  Rações, produtos e carinho
                   <br />
-                  pets felizes e saudáveis
+                  para o seu melhor amigo
                 </h2>
               </div>
               <div className="services">
@@ -380,7 +362,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                     <span className="tag">{s.tag}</span>
                     <div className="service-copy">
                       <h3>{s.name}</h3>
-                      {i === 0 && <p>{s.text}</p>}
+                      <p>{s.text}</p>
                       <button
                         className="arrow-button"
                         aria-label={`Saiba mais: ${s.name}`}
@@ -397,18 +379,18 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
             <section id="cuidados" className="double-grid care-grid">
               {[
                 {
-                  name: 'Apoio e carinho durante\na recuperação',
-                  tag: 'Um novo olhar para o cuidado',
+                  name: 'As melhores rações e\nprodutos para seu pet',
+                  tag: 'Sempre a melhor escolha pro seu pet',
                   image: 'care-pug.webp',
                   word: 'one',
-                  text: 'Acolhimento e atenção às necessidades do seu pet em cada fase.',
+                  text: 'Encontre rações, petiscos e produtos selecionados para facilitar a rotina com seu pet.',
                 },
                 {
                   name: 'Um ambiente acolhedor\npara o seu pet',
                   tag: 'Um lugar para se sentir em casa',
                   image: 'care-cat-green.png',
                   word: 'two',
-                  text: 'Conforto, tranquilidade e carinho para o seu melhor amigo.',
+                  text: 'Uma loja acolhedora, com variedade de produtos e atendimento próximo para ajudar na sua escolha.',
                 },
               ].map((c) => (
                 <article className="feature-card" key={c.name}>
@@ -432,7 +414,6 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                 </article>
               ))}
             </section>
-            <Partners />
           </>
         )}
       </main>
@@ -463,10 +444,10 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
         <DialogContent className="search-dialog">
           <DialogTitle>O que você procura?</DialogTitle>
           <DialogDescription>
-            Busque serviços e categorias para seu pet.
+            Busque produtos, serviços e categorias para seu pet.
           </DialogDescription>
           <input
-            aria-label="Buscar serviços e categorias"
+            aria-label="Buscar produtos, serviços e categorias"
             placeholder="Digite para buscar…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

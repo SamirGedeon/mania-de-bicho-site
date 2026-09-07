@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
-  title: 'Mania de Bicho | Cuidado em cada detalhe',
+  title: 'Mania de Bicho | Pet shop, produtos e banho e tosa',
   description:
-    'Carinho, cuidado e bem-estar para o seu pet. Conheça a Mania de Bicho.',
+    'Rações, acessórios, higiene, itens de farmácia pet e banho e tosa. Variedade e atendimento próximo na Mania de Bicho.',
 };
 export default function RootLayout({
   children,

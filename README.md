@@ -2,8 +2,8 @@
 
 Recriação visual navegável dos seis prints Happy Tails fornecidos pelo cliente, em duas páginas:
 
-- `/`: clínica, serviços, cuidado e parceiros.
-- `/loja/`: hero de loja, categorias, parceiros e coleções.
+- `/`: pet shop, nutrição, produtos e atendimento.
+- `/loja/`: hero de loja, categorias e coleções.
 
 ## Executar
 
@@ -27,5 +27,6 @@ Os Markdown principais estão na pasta `../docs`, também copiados para `docs` n
 
 Busca e navegação funcionam; cards abrem detalhes. Sacola, contato e apresentação são demonstrações, sem envio, compra ou reprodução de vídeo. Não foram inventados telefone, horário, endereço, preço ou parceiros reais. Os serviços e textos são sugestões editoriais a validar com a operação da marca.
 
-Os logos de parceiros e fotografias originais foram usados para reproduzir a referência em estudo privado; verificar licença e parceiros antes de uso comercial. Há prompts para substituir todas as fotos por material novo. As fotos de hero clínico e siamês tiveram o fundo adaptado para verde via ferramenta integrada de geração de imagens.
+As faixas de parceiros foram removidas de ambas as páginas. As fotografias originais foram usadas para reproduzir a referência em estudo privado; verificar licença antes de uso comercial. Há prompts para substituir todas as fotos por material novo. As fotos de hero clínico e siamês tiveram o fundo adaptado para verde via ferramenta integrada de geração de imagens.
+
 
