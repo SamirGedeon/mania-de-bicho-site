@@ -143,3 +143,25 @@ test('alterações de outra aba atualizam o mesmo estado observado', () => {
   assert.deepEqual(store.getSnapshot().items, []);
   unsubscribe();
 });
+
+test('limpar remove todos os produtos e persiste o carrinho vazio após reload', () => {
+  const values = new Map<string, string>();
+  const storage = {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      values.set(key, value);
+    },
+  };
+  const store = createCartStore(() => storage);
+  store.dispatch({ type: 'add', productId: 'pet-001' });
+  store.dispatch({ type: 'add', productId: 'pet-019' });
+  store.dispatch({ type: 'clear' });
+  assert.deepEqual(cartTotals(store.getSnapshot().items), {
+    count: 0,
+    totalCents: 0,
+  });
+  const restored = createCartStore(() => storage);
+  restored.subscribe(() => {});
+  assert.deepEqual(restored.getSnapshot().items, []);
+  assert.deepEqual(readCart(values.get(CART_KEY)!), []);
+});

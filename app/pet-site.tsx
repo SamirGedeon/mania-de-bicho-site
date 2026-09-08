@@ -120,7 +120,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
               onClick={() =>
                 setDetail({
                   name: 'Seu pet shop de confiança',
-                  text: 'Rações, acessórios, higiene, itens de farmácia pet e banho e tosa: encontre o que precisa na Mania de Bicho.',
+                  text: 'Rações, acessórios, higiene e itens de farmácia pet: encontre o que precisa na Mania de Bicho.',
                   image: 'video-dog.webp',
                 })
               }

@@ -1,6 +1,6 @@
 # Catálogo e atendimento
 
-WhatsApp confirmado: (24) 98129-6449. Endereço informado: Rua Dr. Osório de Almeida, 173. O link do Google Maps é o fornecido pelo proprietário. Horários, preços de banho e tosa e avaliações não foram inventados: a página orienta consultar a equipe.
+WhatsApp confirmado: (24) 98129-6449. Endereço informado: Rua Dr. Osório de Almeida, 173. O link do Google Maps é o fornecido pelo proprietário. Horários confirmados: segunda a sexta, 9h às 18h; sábado fechado; domingo, 9h às 13h. A loja não oferece banho e tosa.
 
 ## Para substituir os produtos de demonstração
 
@@ -18,7 +18,7 @@ As rotas `/produto/{id}` são geradas automaticamente durante a publicação. Bu
 
 ## Atendimento
 
-Edite `data/store.ts` para horários, endereço, link do mapa, descrição e serviços do banho e tosa. Avaliações só aparecem quando a lista `reviews` recebe depoimentos reais autorizados, com nome, texto e link da fonte.
+Edite `data/store.ts` para horários, endereço e link do mapa. Avaliações só aparecem quando a lista `reviews` recebe depoimentos reais autorizados, com nome, texto e link da fonte.
 
 O botão do WhatsApp abre uma mensagem para revisão e envio pelo visitante; o site não envia mensagens automaticamente nem confirma pagamento, entrega, estoque ou reserva. O total representa apenas produtos; frete e condições são confirmados pela loja.
 
@@ -27,3 +27,5 @@ O botão do WhatsApp abre uma mensagem para revisão e envio pelo visitante; o s
 Busca combinada, ordenação, cálculo em centavos, persistência e mensagem do WhatsApp possuem testes automatizados. Navegação, produto e carrinho foram revisados no navegador em larguras de 360 e 390 pixels. Isso é uma simulação de tela, não um teste em aparelho físico ou rede móvel real.
 
 As duas imagens PNG maiores da Home receberam versões WebP: juntas passaram de 4.098.847 para 270.822 bytes, preservando os originais. Fotos abaixo da dobra mantêm carregamento tardio; a imagem principal recebe prioridade.
+
+O botão Limpar carrinho remove todos os itens, zera o contador e o total e persiste a limpeza no navegador.

@@ -206,6 +206,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 })}
               </ul>
               <div className="cart-summary">
+                <Button
+                  variant="ghost"
+                  className="clear-cart"
+                  onClick={() => store.dispatch({ type: 'clear' })}
+                >
+                  <Trash2 size={16} /> Limpar carrinho
+                </Button>
                 <div>
                   <span>Total dos produtos</span>
                   <strong>{formatPrice(totalCents)}</strong>

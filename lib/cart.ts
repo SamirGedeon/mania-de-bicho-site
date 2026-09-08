@@ -4,6 +4,7 @@ export const CART_KEY = 'mania-de-bicho:cart:v1';
 export const MAX_QUANTITY = 99;
 export type CartItem = { productId: string; quantity: number };
 export type CartAction =
+  | { type: 'clear' }
   | { type: 'add'; productId: string }
   | { type: 'quantity'; productId: string; quantity: number }
   | { type: 'remove'; productId: string };
@@ -52,6 +53,7 @@ export function readCart(raw: string | null): CartItem[] {
 }
 
 export function updateCart(items: CartItem[], action: CartAction): CartItem[] {
+  if (action.type === 'clear') return [];
   if (!productById.has(action.productId)) return items;
   if (action.type === 'remove')
     return items.filter((item) => item.productId !== action.productId);

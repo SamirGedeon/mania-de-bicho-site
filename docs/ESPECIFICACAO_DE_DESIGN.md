@@ -4,7 +4,7 @@
 
 Esta revisão substitui as decisões correspondentes da reconstrução inicial descrita abaixo. As medições dos prints permanecem como histórico da referência.
 
-- Negócio: **pet shop**, com rações, acessórios, higiene, itens de farmácia pet e banho e tosa. Textos visíveis, detalhes dos cards, busca e metadados não apresentam serviços médicos.
+- Negócio: **pet shop**, com rações, acessórios, higiene e itens de farmácia pet. Textos visíveis, detalhes dos cards, busca e metadados não apresentam serviços médicos.
 - Seção principal: “Rações, produtos e carinho / para o seu melhor amigo”. Cards: “Melhor nutrição”, “Produtos de qualidade” e “Atendimento especializado”, todos com badge, título e descrição curta.
 - Grid desktop: `repeat(3, minmax(0, 1fr))`, gap14 px, altura compartilhada362 px e mesmos ajustes responsivos anteriores. Em até800 px, uma coluna. Não há mais coluna ampliada.
 - Cards de serviço, categoria e produto: hover `scale(1.03)`, transição300 ms ease, sombra suave e z-index2. A escala não altera o espaço ocupado no grid.

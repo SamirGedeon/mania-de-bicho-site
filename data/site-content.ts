@@ -15,6 +15,6 @@ export const services = [
     name: 'Atendimento especializado',
     tag: 'Carinho em cada detalhe',
     image: 'service-rabbit.webp',
-    text: 'Ajuda para escolher produtos e conhecer nosso banho e tosa.',
+    text: 'Ajuda para escolher os produtos certos para o dia a dia do seu pet.',
   },
 ];

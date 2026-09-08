@@ -2,7 +2,7 @@ import { SiteHeader, SiteFooter } from '@/components/shop/site-chrome';
 export const metadata = {
   title: 'Contato e localização | Mania de Bicho',
   description:
-    'Endereço da Mania de Bicho e contato pelo WhatsApp para produtos, horários e banho e tosa.',
+    'Endereço da Mania de Bicho e contato pelo WhatsApp para produtos, horários e localização.',
 };
 export default function ContactPage() {
   return (
@@ -13,7 +13,7 @@ export default function ContactPage() {
       <main className="catalog-page contact-page">
         <h1>Fale com a gente</h1>
         <p>
-          Produtos, horários e agendamento: nossa equipe ajuda você pelo
+          Produtos, horários e informações da loja: nossa equipe ajuda você pelo
           WhatsApp.
         </p>
       </main>

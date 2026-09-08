@@ -1,13 +1,9 @@
 /* oxlint-disable next/no-html-link-for-pages */
-import { MapPin, Clock3, MessageCircle, Scissors } from 'lucide-react';
+import { MapPin, Clock3, MessageCircle } from 'lucide-react';
 import { storeInfo } from '@/data/store';
 import { whatsappHref } from '@/lib/whatsapp';
 export function StoreDetails() {
   const contact = whatsappHref(storeInfo.whatsapp);
-  const grooming = whatsappHref(
-    storeInfo.whatsapp,
-    'Olá! Gostaria de saber quais serviços de banho e tosa vocês oferecem, valores e horários para agendamento.',
-  );
   return (
     <section className="store-details" aria-labelledby="store-title">
       <div className="store-intro">
@@ -46,26 +42,6 @@ export function StoreDetails() {
           {contact && (
             <a href={contact} target="_blank" rel="noopener noreferrer">
               Consultar horários ↗
-            </a>
-          )}
-        </article>
-        <article>
-          <Scissors size={24} />
-          <h3>Banho e tosa</h3>
-          <p>
-            {storeInfo.groomingDescription ||
-              'Fale com a equipe para conhecer os serviços, valores e a disponibilidade de agendamento.'}
-          </p>
-          {storeInfo.groomingServices.length > 0 && (
-            <ul>
-              {storeInfo.groomingServices.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          )}
-          {grooming && (
-            <a href={grooming} target="_blank" rel="noopener noreferrer">
-              Consultar banho e tosa ↗
             </a>
           )}
         </article>
