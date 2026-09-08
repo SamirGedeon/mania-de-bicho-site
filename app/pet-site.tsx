@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dialog';
 import { SiteHeader, SiteFooter } from '@/components/shop/site-chrome';
 import { categories, categoryHref } from '@/data/products';
+import { brandStory } from '@/data/brand-story';
+import { HeroVideoDialog } from '@/components/shop/hero-video-dialog';
 import { services } from '@/data/site-content';
 const asset = (name: string) => `/assets/${name}`;
 type Detail = { name: string; text: string; image?: string };
@@ -23,6 +25,7 @@ function Tag({ children }: { children: React.ReactNode }) {
   );
 }
 export function PetSite({ shop = false }: { shop?: boolean }) {
+  const [videoOpen, setVideoOpen] = useState(false);
   const [detail, setDetail] = useState<Detail | null>(null);
   return (
     <>
@@ -117,13 +120,8 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
             </div>
             <button
               className="hero-video"
-              onClick={() =>
-                setDetail({
-                  name: 'Seu pet shop de confiança',
-                  text: 'Rações, acessórios, higiene e itens de farmácia pet: encontre o que precisa na Mania de Bicho.',
-                  image: 'video-dog.webp',
-                })
-              }
+              aria-label="Assistir à apresentação da Mania de Bicho"
+              onClick={() => setVideoOpen(true)}
             >
               <img
                 src={asset('video-dog.webp')}
@@ -138,9 +136,22 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                 produtos pet
               </span>
             </button>
-            <a href="#servicos" className="circle-cta">
-              Conheça a Mania
-            </a>
+            <button
+              className="circle-cta paw-cta"
+              aria-label="Conheça a história da Mania de Bicho"
+              onClick={() =>
+                setDetail({
+                  name: brandStory.title,
+                  text: `Texto de exemplo — aguardando a história real da loja. ${brandStory.text}`,
+                })
+              }
+            >
+              <span>
+                Conheça
+                <br />
+                nossa história
+              </span>
+            </button>
             <div className="giant clinic-giant" aria-hidden="true">
               pequenas
               <br />
@@ -285,6 +296,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
         )}
       </main>
       <SiteFooter />
+      <HeroVideoDialog open={videoOpen} onOpenChange={setVideoOpen} />
       <Dialog
         open={!!detail}
         onOpenChange={(open) => {
