@@ -1,6 +1,10 @@
 /* Native images and links serve the static export. */
 /* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
 'use client';
+import { storeInfo } from '@/data/store';
+import { whatsappHref } from '@/lib/whatsapp';
+import { productHref } from '@/data/products';
+import { StoreDetails } from './store-details';
 import { useState } from 'react';
 import {
   ArrowRight,
@@ -34,9 +38,18 @@ function ContactDialog({
       <DialogContent className="detail-dialog">
         <DialogTitle>Vamos encontrar o melhor para seu pet</DialogTitle>
         <DialogDescription>
-          Os canais de atendimento da Mania de Bicho serão disponibilizados aqui
-          em breve.
+          Converse com a nossa equipe pelo WhatsApp ou visite a loja.
         </DialogDescription>
+        <p>{storeInfo.address}</p>
+        <a
+          className="pill cta"
+          href={whatsappHref(storeInfo.whatsapp)!}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Falar pelo WhatsApp
+        </a>
+        <a href="/contato/">Endereço e informações da loja</a>
       </DialogContent>
     </Dialog>
   );
@@ -47,7 +60,7 @@ const nav = [
   ['Produtos', '/#cuidados'],
   ['Loja', '/loja/'],
   ['Categorias', '/loja/#categorias'],
-  ['Contato', '#contato'],
+  ['Contato', '/contato/'],
 ];
 const searchable = [
   ...categories.map((c) => ({
@@ -58,7 +71,7 @@ const searchable = [
   ...products.map((p) => ({
     key: p.id,
     name: `${p.brand} — ${p.name} · ${p.size}`,
-    href: `${categoryHref(p.category)}#${p.id}`,
+    href: productHref(p.id),
   })),
   ...services.map((s) => ({ key: s.name, name: s.name, href: '/#servicos' })),
 ];
@@ -127,9 +140,14 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
             >
               <Search size={21} />
             </button>
-            <button className="pill cta" onClick={() => setContact(true)}>
-              Fale com a gente
-            </button>
+            <a
+              className="pill cta"
+              href={whatsappHref(storeInfo.whatsapp)!}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp
+            </a>
             <button
               className="icon-button mobile-toggle"
               aria-label="Abrir menu"
@@ -174,6 +192,14 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetContent className="mobile-menu">
           <SheetTitle>Mania de Bicho</SheetTitle>
+          <a
+            className="pill cta"
+            href={whatsappHref(storeInfo.whatsapp)!}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp ↗
+          </a>
           {nav.map(([label, href]) => (
             <a
               key={label}
@@ -199,6 +225,7 @@ export function SiteFooter() {
   const [contact, setContact] = useState(false);
   return (
     <>
+      <StoreDetails />
       <footer id="contato">
         <a href="/" aria-label="Voltar ao início">
           <img src="/assets/logo.png" alt="Mania de Bicho" />

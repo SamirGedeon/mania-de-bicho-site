@@ -32,7 +32,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
       <section className={`hero ${shop ? 'hero-shop' : 'hero-clinic'}`}>
         <img
           className="hero-photo"
-          src={asset(shop ? 'hero-shop.webp' : 'hero-clinic-green.png')}
+          src={asset(shop ? 'hero-shop.webp' : 'hero-clinic-green.webp')}
           alt={
             shop ? 'Cão usando moletom claro' : 'Retrato de um buldogue branco'
           }
@@ -251,7 +251,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                 {
                   name: 'Um ambiente acolhedor\npara o seu pet',
                   tag: 'Um lugar para se sentir em casa',
-                  image: 'care-cat-green.png',
+                  image: 'care-cat-green.webp',
                   word: 'two',
                   text: 'Uma loja acolhedora, com variedade de produtos e atendimento próximo para ajudar na sua escolha.',
                 },

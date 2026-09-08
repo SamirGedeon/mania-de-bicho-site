@@ -1,5 +1,9 @@
 /* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
 'use client';
+import { useState } from 'react';
+import { CatalogFilters } from './catalog-filters';
+import { emptyFilters, filterProducts } from '@/lib/catalog';
+import { productHref, availabilityLabel } from '@/data/products';
 import { ArrowLeft, ArrowRight, Bone, ShoppingBag } from 'lucide-react';
 import {
   categories,
@@ -15,7 +19,9 @@ import { SiteHeader, SiteFooter } from './site-chrome';
 
 export function CategoryPage({ slug }: { slug: CategorySlug }) {
   const category = categories.find((c) => c.slug === slug)!;
-  const listing = products.filter((p) => p.category === slug);
+  const [filters, setFilters] = useState({ ...emptyFilters });
+  const source = products.filter((p) => p.category === slug);
+  const listing = filterProducts(source, filters);
   const { addItem, items, ready } = useCart();
   return (
     <>
@@ -59,10 +65,33 @@ export function CategoryPage({ slug }: { slug: CategorySlug }) {
             </a>
           ))}
         </nav>
+        <CatalogFilters
+          products={source}
+          value={filters}
+          onChange={setFilters}
+        />
         <div className="catalog-caption">
-          <span>{listing.length} produtos</span>
-          <p>Catálogo demonstrativo · marcas, imagens e preços ilustrativos</p>
+          <output aria-live="polite">
+            {listing.length} de {source.length} produtos
+          </output>
+          {source.some((p) => p.availability === 'demo') && (
+            <p>
+              Catálogo demonstrativo · marcas, imagens e preços ilustrativos
+            </p>
+          )}
         </div>
+        {!listing.length && (
+          <div className="catalog-no-results">
+            <h2>Nenhum produto encontrado</h2>
+            <p>Experimente outro termo ou limpe os filtros.</p>
+            <Button
+              className="pill cta"
+              onClick={() => setFilters({ ...emptyFilters })}
+            >
+              Limpar filtros
+            </Button>
+          </div>
+        )}
         <div className="catalog-grid">
           {listing.map((product) => {
             const quantity =
@@ -75,7 +104,11 @@ export function CategoryPage({ slug }: { slug: CategorySlug }) {
                 id={product.id}
                 key={product.id}
               >
-                <div className="catalog-product-image">
+                <a
+                  href={productHref(product.id)}
+                  className="catalog-product-image"
+                  aria-label={`Ver detalhes de ${product.name}`}
+                >
                   <img
                     src={product.image}
                     alt={product.imageAlt}
@@ -83,24 +116,35 @@ export function CategoryPage({ slug }: { slug: CategorySlug }) {
                     width={360}
                     height={280}
                   />
-                </div>
+                </a>
                 <div className="catalog-product-content">
                   <span className="product-brand">{product.brand}</span>
-                  <h2>{product.name}</h2>
+                  <h2>
+                    <a href={productHref(product.id)}>{product.name}</a>
+                  </h2>
                   <p className="product-size">{product.size}</p>
+                  <p className="product-availability">
+                    {availabilityLabel(product)}
+                  </p>
                   <strong className="product-price">
                     {formatPrice(product.priceCents)}
                   </strong>
                   <Button
                     className="pill cta add-to-cart"
-                    disabled={!ready || atLimit}
+                    disabled={
+                      !ready ||
+                      atLimit ||
+                      product.availability === 'unavailable'
+                    }
                     onClick={() => addItem(product.id)}
                     aria-label={`Adicionar ao carrinho: ${product.name}, ${product.size}`}
                   >
                     <ShoppingBag size={17} />
-                    {atLimit
-                      ? 'Limite de 99 unidades'
-                      : 'Adicionar ao carrinho'}
+                    {product.availability === 'unavailable'
+                      ? 'Indisponível'
+                      : atLimit
+                        ? 'Limite de 99 unidades'
+                        : 'Adicionar ao carrinho'}
                     {!atLimit && <ArrowRight size={16} />}
                   </Button>
                 </div>

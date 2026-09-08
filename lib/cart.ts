@@ -56,6 +56,11 @@ export function updateCart(items: CartItem[], action: CartAction): CartItem[] {
   if (action.type === 'remove')
     return items.filter((item) => item.productId !== action.productId);
   const current = items.find((item) => item.productId === action.productId);
+  if (
+    productById.get(action.productId)?.availability === 'unavailable' &&
+    (action.type === 'add' || action.quantity > (current?.quantity ?? 0))
+  )
+    return items;
   const quantity =
     action.type === 'add' ? (current?.quantity ?? 0) + 1 : action.quantity;
   if (!Number.isSafeInteger(quantity) || quantity < 0) return items;

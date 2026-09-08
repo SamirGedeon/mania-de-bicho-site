@@ -16,6 +16,8 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { storeInfo } from '@/data/store';
+import { cartMessage, whatsappHref } from '@/lib/whatsapp';
 import { productById, formatPrice } from '@/data/products';
 import { CART_KEY, MAX_QUANTITY, cartTotals } from '@/lib/cart';
 import type { CartAction, CartItem } from '@/lib/cart';
@@ -50,6 +52,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
   const [open, setOpen] = useState(false);
   const { count, totalCents } = cartTotals(items);
+  const whatsapp = whatsappHref(storeInfo.whatsapp, cartMessage(items));
+  const hasDemo = items.some(
+    (i) => productById.get(i.productId)?.availability === 'demo',
+  );
   useEffect(() => {
     const sync = (event: StorageEvent) => {
       if (event.key === CART_KEY || event.key === null)
@@ -128,6 +134,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                         <span className="product-brand">{product.brand}</span>
                         <h3>{product.name}</h3>
                         <p>{product.size}</p>
+                        {product.availability === 'unavailable' && (
+                          <p>
+                            Indisponível — consulte alternativas com a loja.
+                          </p>
+                        )}
                         <p>{formatPrice(product.priceCents)} / unidade</p>
                         <div className="cart-item-controls">
                           <div className="quantity-control">
@@ -153,7 +164,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                               variant="ghost"
                               size="icon"
                               aria-label={`Aumentar quantidade de ${product.name}`}
-                              disabled={item.quantity >= MAX_QUANTITY}
+                              disabled={
+                                item.quantity >= MAX_QUANTITY ||
+                                product.availability === 'unavailable'
+                              }
                               onClick={() =>
                                 store.dispatch({
                                   type: 'quantity',
@@ -196,7 +210,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                   <span>Total dos produtos</span>
                   <strong>{formatPrice(totalCents)}</strong>
                 </div>
-                <p>Catálogo demonstrativo. Sem cobrança ou pagamento.</p>
+                <p>
+                  {hasDemo
+                    ? 'Catálogo demonstrativo. Produtos e valores ilustrativos.'
+                    : 'Disponibilidade e entrega serão confirmadas pela loja.'}
+                </p>
+                {whatsapp && (
+                  <a
+                    className="pill cta"
+                    href={whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Enviar carrinho pelo WhatsApp ↗
+                  </a>
+                )}
+                <p>
+                  O WhatsApp abrirá com sua mensagem pronta. Revise e envie para
+                  a loja.
+                </p>
                 <Button className="pill cta" onClick={() => setOpen(false)}>
                   Continuar escolhendo
                 </Button>

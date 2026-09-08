@@ -36,6 +36,11 @@ export type Product = {
   priceCents: number;
   image: string;
   imageAlt: string;
+  description: string;
+  petSizes: string[];
+  lifeStages: string[];
+  availability: 'demo' | 'available' | 'unavailable';
+  images?: string[];
 };
 export const products: Product[] = [
   {
@@ -47,6 +52,11 @@ export const products: Product[] = [
     priceCents: 15990,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno', 'Médio', 'Grande'],
+    lifeStages: ['Adulto'],
+    availability: 'demo',
   },
   {
     id: 'pet-002',
@@ -57,6 +67,11 @@ export const products: Product[] = [
     priceCents: 13990,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno', 'Médio', 'Grande'],
+    lifeStages: ['Filhote'],
+    availability: 'demo',
   },
   {
     id: 'pet-003',
@@ -67,6 +82,11 @@ export const products: Product[] = [
     priceCents: 6490,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Adulto'],
+    availability: 'demo',
   },
   {
     id: 'pet-004',
@@ -77,6 +97,11 @@ export const products: Product[] = [
     priceCents: 18990,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno', 'Médio', 'Grande'],
+    lifeStages: ['Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-005',
@@ -87,6 +112,11 @@ export const products: Product[] = [
     priceCents: 7990,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno', 'Médio', 'Grande'],
+    lifeStages: ['Adulto'],
+    availability: 'demo',
   },
   {
     id: 'pet-006',
@@ -97,6 +127,11 @@ export const products: Product[] = [
     priceCents: 8990,
     image: '/assets/category-food.webp',
     imageAlt: 'Ração seca ilustrativa',
+    description:
+      'Alimento seco para a rotina do seu pet. Compare a fase da vida e o peso da embalagem ao escolher. Composição e orientações de uso serão informadas no catálogo real.',
+    petSizes: ['Pequeno', 'Médio', 'Grande'],
+    lifeStages: ['Adulto'],
+    availability: 'demo',
   },
   {
     id: 'pet-007',
@@ -107,6 +142,11 @@ export const products: Product[] = [
     priceCents: 1290,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-008',
@@ -117,6 +157,11 @@ export const products: Product[] = [
     priceCents: 1690,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-009',
@@ -127,6 +172,11 @@ export const products: Product[] = [
     priceCents: 2290,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Grande'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-010',
@@ -137,6 +187,11 @@ export const products: Product[] = [
     priceCents: 1490,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-011',
@@ -147,6 +202,11 @@ export const products: Product[] = [
     priceCents: 1990,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-012',
@@ -157,6 +217,11 @@ export const products: Product[] = [
     priceCents: 3290,
     image: '/assets/category-toys.webp',
     imageAlt: 'Bola de feltro ilustrativa',
+    description:
+      'Bolinha para brincadeiras acompanhadas. Confira o diâmetro e escolha um tamanho adequado ao seu pet. Substitua o brinquedo se apresentar desgaste.',
+    petSizes: ['Grande'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-013',
@@ -167,6 +232,11 @@ export const products: Product[] = [
     priceCents: 4490,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-014',
@@ -177,6 +247,11 @@ export const products: Product[] = [
     priceCents: 5990,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-015',
@@ -187,6 +262,11 @@ export const products: Product[] = [
     priceCents: 8990,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-016',
@@ -197,6 +277,11 @@ export const products: Product[] = [
     priceCents: 6990,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-017',
@@ -207,6 +292,11 @@ export const products: Product[] = [
     priceCents: 11990,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-018',
@@ -217,6 +307,11 @@ export const products: Product[] = [
     priceCents: 15990,
     image: '/assets/product-leash.webp',
     imageAlt: 'Guia retrátil ilustrativa',
+    description:
+      'Guia retrátil para os passeios do dia a dia. Confira o comprimento antes de escolher. A resistência e o peso máximo suportado devem ser confirmados com a loja.',
+    petSizes: ['Grande'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-019',
@@ -227,6 +322,11 @@ export const products: Product[] = [
     priceCents: 7990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-020',
@@ -237,6 +337,11 @@ export const products: Product[] = [
     priceCents: 10990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Pequeno'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-021',
@@ -247,6 +352,11 @@ export const products: Product[] = [
     priceCents: 14990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-022',
@@ -257,6 +367,11 @@ export const products: Product[] = [
     priceCents: 19990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Grande'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-023',
@@ -267,6 +382,11 @@ export const products: Product[] = [
     priceCents: 17990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Médio'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
   {
     id: 'pet-024',
@@ -277,6 +397,11 @@ export const products: Product[] = [
     priceCents: 26990,
     image: '/assets/category-bed.webp',
     imageAlt: 'Cama redonda ilustrativa',
+    description:
+      'Cama redonda para o cantinho de descanso do seu pet. Compare as medidas com o espaço que ele ocupa deitado. Material e instruções de limpeza serão confirmados no catálogo real.',
+    petSizes: ['Grande'],
+    lifeStages: ['Filhote', 'Adulto', 'Sênior'],
+    availability: 'demo',
   },
 ];
 export const categoryHref = (slug: CategorySlug) => `/loja/${slug}`;
@@ -287,3 +412,11 @@ export const formatPrice = (cents: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
     cents / 100,
   );
+
+export const productHref = (id: string) => `/produto/${id}`;
+export const availabilityLabel = (product: Product) =>
+  ({
+    demo: 'Produto demonstrativo',
+    available: 'Disponível',
+    unavailable: 'Indisponível',
+  })[product.availability];
