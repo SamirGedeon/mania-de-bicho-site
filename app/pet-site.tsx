@@ -242,18 +242,20 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
             <section id="cuidados" className="double-grid care-grid">
               {[
                 {
-                  name: 'As melhores rações e\nprodutos para seu pet',
-                  tag: 'Sempre a melhor escolha pro seu pet',
+                  name: 'Rações e alimentos\npara seu pet',
+                  tag: 'Encontre a opção para cada fase',
                   image: 'care-pug.webp',
                   word: 'one',
-                  text: 'Encontre rações, petiscos e produtos selecionados para facilitar a rotina com seu pet.',
+                  href: categoryHref('racoes-e-alimentos'),
+                  cta: 'Explorar rações',
                 },
                 {
-                  name: 'Um ambiente acolhedor\npara o seu pet',
-                  tag: 'Um lugar para se sentir em casa',
+                  name: 'Acessórios para\npassear com seu pet',
+                  tag: 'Tudo pronto para o próximo passeio',
                   image: 'care-cat-green.webp',
                   word: 'two',
-                  text: 'Uma loja acolhedora, com variedade de produtos e atendimento próximo para ajudar na sua escolha.',
+                  href: categoryHref('acessorios-de-passeio'),
+                  cta: 'Explorar acessórios',
                 },
               ].map((c) => (
                 <article className="feature-card" key={c.name}>
@@ -269,9 +271,9 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                     <Tag>{c.tag}</Tag>
                     <div>
                       <h2>{c.name}</h2>
-                      <button onClick={() => setDetail(c)}>
-                        Saiba mais <ArrowRight size={17} />
-                      </button>
+                      <a href={c.href}>
+                        {c.cta} <ArrowRight size={17} />
+                      </a>
                     </div>
                   </div>
                 </article>

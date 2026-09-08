@@ -494,7 +494,7 @@ input:focus-visible {
   white-space: pre-line;
   letter-spacing: -0.045em;
 }
-.feature-overlay button {
+.feature-overlay :is(button, a) {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -504,7 +504,7 @@ input:focus-visible {
   border: 0;
   padding: 6px 0;
 }
-.feature-overlay button:hover {
+.feature-overlay :is(button, a):hover {
   text-decoration: underline;
 }
 .hero-shop {
@@ -780,7 +780,7 @@ footer > .pill {
   .feature-overlay > div {
     display: block;
   }
-  .feature-overlay button {
+  .feature-overlay :is(button, a) {
     margin-top: 10px;
   }
   .service {
@@ -1078,7 +1078,7 @@ footer > .pill {
   .feature-overlay .tag {
     font-size: 10px;
   }
-  .feature-overlay button {
+  .feature-overlay :is(button, a) {
     margin-top: 14px;
   }
   .shop-copy {
@@ -1175,12 +1175,12 @@ footer > .pill {
 }
 .nav-shell nav a,
 .mobile-menu > a,
-.feature-overlay button {
+.feature-overlay :is(button, a) {
   position: relative;
 }
 .nav-shell nav a::after,
 .mobile-menu > a::after,
-.feature-overlay button::after {
+.feature-overlay :is(button, a)::after {
   content: '';
   position: absolute;
   left: 0;
@@ -1198,7 +1198,7 @@ footer > .pill {
   right: 16px;
   bottom: 7px;
 }
-.feature-overlay button:hover {
+.feature-overlay :is(button, a):hover {
   text-decoration: none;
 }
 .service:focus-within,
@@ -1229,7 +1229,7 @@ footer > .pill {
   }
   .nav-shell nav a:hover::after,
   .mobile-menu > a:hover::after,
-  .feature-overlay button:hover::after {
+  .feature-overlay :is(button, a):hover::after {
     transform: scaleX(1);
   }
 }
@@ -1257,7 +1257,7 @@ footer > .pill {
   .hero-video:hover .play {
     transform: scale(1.08);
   }
-  .feature-overlay button:hover > svg,
+  .feature-overlay :is(button, a):hover > svg,
   .search-results button:hover > svg,
   .mobile-menu > a:hover > svg {
     transform: translateX(3px);
