@@ -176,13 +176,15 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                   name: 'Nova coleção\nde caminhas',
                   image: 'collection-bed.webp',
                   word: 'new',
-                  text: 'Um cantinho de conforto para o seu pet.',
+                  href: categoryHref('camas-e-conforto'),
+                  cta: 'Explorar caminhas',
                 },
                 {
                   name: 'Acessórios para\npasseios especiais',
                   image: 'collection-walk.webp',
                   word: 'pro',
-                  text: 'Descubra os acessórios para aproveitar cada passeio.',
+                  href: categoryHref('acessorios-de-passeio'),
+                  cta: 'Explorar acessórios',
                 },
               ].map((c) => (
                 <article className="feature-card collection" key={c.name}>
@@ -198,9 +200,9 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                     <Tag>Um carinho para chamar de seu</Tag>
                     <div>
                       <h2>{c.name}</h2>
-                      <button onClick={() => setDetail(c)}>
-                        Ver produtos <ArrowRight size={17} />
-                      </button>
+                      <a href={c.href}>
+                        {c.cta} <ArrowRight size={17} />
+                      </a>
                     </div>
                   </div>
                 </article>
@@ -250,12 +252,12 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
                   cta: 'Explorar rações',
                 },
                 {
-                  name: 'Acessórios para\npassear com seu pet',
-                  tag: 'Tudo pronto para o próximo passeio',
+                  name: 'Brinquedos para\ndivertir seu pet',
+                  tag: 'Mais diversão em cada brincadeira',
                   image: 'care-cat-green.webp',
                   word: 'two',
-                  href: categoryHref('acessorios-de-passeio'),
-                  cta: 'Explorar acessórios',
+                  href: categoryHref('brinquedos'),
+                  cta: 'Explorar brinquedos',
                 },
               ].map((c) => (
                 <article className="feature-card" key={c.name}>
