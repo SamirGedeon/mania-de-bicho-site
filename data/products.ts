@@ -31,6 +31,7 @@ export type Product = {
   id: string;
   category: CategorySlug;
   brand: string;
+  petTypes: ('dog' | 'cat')[];
   name: string;
   size: string;
   priceCents: number;
@@ -45,6 +46,7 @@ export type Product = {
 export const products: Product[] = [
   {
     id: 'pet-001',
+    petTypes: ['dog'],
     category: 'racoes-e-alimentos',
     brand: 'VivaPata',
     name: 'Ração para cães adultos — carne e arroz',
@@ -60,6 +62,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-002',
+    petTypes: ['dog'],
     category: 'racoes-e-alimentos',
     brand: 'VivaPata',
     name: 'Ração para filhotes — frango e arroz',
@@ -75,6 +78,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-003',
+    petTypes: ['dog'],
     category: 'racoes-e-alimentos',
     brand: 'GrãoAmigo',
     name: 'Ração para cães de pequeno porte — frango',
@@ -90,6 +94,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-004',
+    petTypes: ['dog'],
     category: 'racoes-e-alimentos',
     brand: 'GrãoAmigo',
     name: 'Ração para cães sêniores — frango e aveia',
@@ -105,6 +110,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-005',
+    petTypes: ['cat'],
     category: 'racoes-e-alimentos',
     brand: 'MiauMesa',
     name: 'Ração para gatos adultos — salmão',
@@ -120,6 +126,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-006',
+    petTypes: ['cat'],
     category: 'racoes-e-alimentos',
     brand: 'MiauMesa',
     name: 'Ração para gatos castrados — frango',
@@ -135,6 +142,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-007',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'PulaPata',
     name: 'Bola de feltro Patinha — mini',
@@ -150,6 +158,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-008',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'PulaPata',
     name: 'Bola de feltro Patinha — clássica',
@@ -165,6 +174,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-009',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'PulaPata',
     name: 'Bola de feltro Patinha — grande',
@@ -180,6 +190,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-010',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'BrincaBicho',
     name: 'Bola de feltro para buscar — pequena',
@@ -195,6 +206,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-011',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'BrincaBicho',
     name: 'Bola de feltro para buscar — média',
@@ -210,6 +222,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-012',
+    petTypes: ['dog'],
     category: 'brinquedos',
     brand: 'BrincaBicho',
     name: 'Bola de feltro para buscar — gigante',
@@ -225,6 +238,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-013',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'PassoPet',
     name: 'Guia retrátil Essencial — mini',
@@ -240,6 +254,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-014',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'PassoPet',
     name: 'Guia retrátil Essencial — pequena',
@@ -255,6 +270,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-015',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'PassoPet',
     name: 'Guia retrátil Essencial — média',
@@ -270,6 +286,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-016',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'TrilhaPata',
     name: 'Guia retrátil Passeio — compacta',
@@ -285,6 +302,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-017',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'TrilhaPata',
     name: 'Guia retrátil Passeio — conforto',
@@ -300,6 +318,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-018',
+    petTypes: ['dog'],
     category: 'acessorios-de-passeio',
     brand: 'TrilhaPata',
     name: 'Guia retrátil Passeio — longa',
@@ -315,6 +334,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-019',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'NinhoBicho',
     name: 'Cama redonda Aconchego — PP',
@@ -330,6 +350,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-020',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'NinhoBicho',
     name: 'Cama redonda Aconchego — P',
@@ -345,6 +366,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-021',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'NinhoBicho',
     name: 'Cama redonda Aconchego — M',
@@ -360,6 +382,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-022',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'NinhoBicho',
     name: 'Cama redonda Aconchego — G',
@@ -375,6 +398,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-023',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'SonoPata',
     name: 'Cama redonda Maciez — M',
@@ -390,6 +414,7 @@ export const products: Product[] = [
   },
   {
     id: 'pet-024',
+    petTypes: ['dog', 'cat'],
     category: 'camas-e-conforto',
     brand: 'SonoPata',
     name: 'Cama redonda Maciez — GG',

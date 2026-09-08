@@ -13,6 +13,7 @@ import { SiteHeader, SiteFooter } from '@/components/shop/site-chrome';
 import { categories, categoryHref } from '@/data/products';
 import { brandStory } from '@/data/brand-story';
 import { HeroVideoDialog } from '@/components/shop/hero-video-dialog';
+import { PetShortcuts } from '@/components/shop/pet-shortcuts';
 import { services } from '@/data/site-content';
 const asset = (name: string) => `/assets/${name}`;
 type Detail = { name: string; text: string; image?: string };
@@ -161,6 +162,7 @@ export function PetSite({ shop = false }: { shop?: boolean }) {
         )}
       </section>
       <main id="conteudo">
+        <PetShortcuts />
         {shop ? (
           <>
             <section className="categories-section" id="categorias">

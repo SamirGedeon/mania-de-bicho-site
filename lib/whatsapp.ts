@@ -1,6 +1,11 @@
 import { productById, formatPrice } from '../data/products.ts';
 import { cartTotals } from './cart.ts';
 import type { CartItem } from './cart.ts';
+import type { Product } from '../data/products.ts';
+
+export function productQuestion(product: Product) {
+  return `Olá, Mania de Bicho! Tenho uma dúvida sobre ${product.brand} — ${product.name} (${product.size}), referência ${product.id}.${product.availability === 'demo' ? '\nVi este item no catálogo demonstrativo. Podem me informar as opções reais disponíveis?' : '\nPodem me ajudar com mais informações sobre este produto?'}`;
+}
 
 export function whatsappHref(
   phone: string,

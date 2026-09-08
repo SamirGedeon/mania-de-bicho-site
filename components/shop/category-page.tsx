@@ -3,26 +3,30 @@
 import { useState } from 'react';
 import { CatalogFilters } from './catalog-filters';
 import { emptyFilters, filterProducts } from '@/lib/catalog';
-import { productHref, availabilityLabel } from '@/data/products';
-import { ArrowLeft, ArrowRight, Bone, ShoppingBag } from 'lucide-react';
-import {
-  categories,
-  categoryHref,
-  formatPrice,
-  products,
-} from '@/data/products';
+import { ProductCard } from './product-card';
+import { PetShortcuts } from './pet-shortcuts';
+import { ArrowLeft, Bone } from 'lucide-react';
+import { categories, categoryHref, products } from '@/data/products';
 import type { CategorySlug } from '@/data/products';
-import { MAX_QUANTITY } from '@/lib/cart';
 import { Button } from '@/components/ui/button';
-import { useCart } from './cart-provider';
 import { SiteHeader, SiteFooter } from './site-chrome';
 
-export function CategoryPage({ slug }: { slug: CategorySlug }) {
-  const category = categories.find((c) => c.slug === slug)!;
+export function CategoryPage({
+  slug,
+  pet,
+}: {
+  slug?: CategorySlug;
+  pet?: 'dog' | 'cat';
+}) {
+  const category = categories.find((c) => c.slug === slug) ?? {
+    name: pet === 'dog' ? 'Produtos para cães' : 'Produtos para gatos',
+    text: 'Explore as categorias e encontre os produtos para seu pet.',
+  };
   const [filters, setFilters] = useState({ ...emptyFilters });
-  const source = products.filter((p) => p.category === slug);
+  const source = products.filter(
+    (p) => (!slug || p.category === slug) && (!pet || p.petTypes.includes(pet)),
+  );
   const listing = filterProducts(source, filters);
-  const { addItem, items, ready } = useCart();
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -65,6 +69,7 @@ export function CategoryPage({ slug }: { slug: CategorySlug }) {
             </a>
           ))}
         </nav>
+        <PetShortcuts selected={pet} />
         <CatalogFilters
           products={source}
           value={filters}
@@ -93,64 +98,9 @@ export function CategoryPage({ slug }: { slug: CategorySlug }) {
           </div>
         )}
         <div className="catalog-grid">
-          {listing.map((product) => {
-            const quantity =
-              items.find((item) => item.productId === product.id)?.quantity ??
-              0;
-            const atLimit = quantity >= MAX_QUANTITY;
-            return (
-              <article
-                className="catalog-product"
-                id={product.id}
-                key={product.id}
-              >
-                <a
-                  href={productHref(product.id)}
-                  className="catalog-product-image"
-                  aria-label={`Ver detalhes de ${product.name}`}
-                >
-                  <img
-                    src={product.image}
-                    alt={product.imageAlt}
-                    loading="lazy"
-                    width={360}
-                    height={280}
-                  />
-                </a>
-                <div className="catalog-product-content">
-                  <span className="product-brand">{product.brand}</span>
-                  <h2>
-                    <a href={productHref(product.id)}>{product.name}</a>
-                  </h2>
-                  <p className="product-size">{product.size}</p>
-                  <p className="product-availability">
-                    {availabilityLabel(product)}
-                  </p>
-                  <strong className="product-price">
-                    {formatPrice(product.priceCents)}
-                  </strong>
-                  <Button
-                    className="pill cta add-to-cart"
-                    disabled={
-                      !ready ||
-                      atLimit ||
-                      product.availability === 'unavailable'
-                    }
-                    onClick={() => addItem(product.id)}
-                    aria-label={`Adicionar ao carrinho: ${product.name}, ${product.size}`}
-                  >
-                    <ShoppingBag size={17} />
-                    {product.availability === 'unavailable'
-                      ? 'Indisponível'
-                      : atLimit
-                        ? 'Limite de 99 unidades'
-                        : 'Adicionar ao carrinho'}
-                    {!atLimit && <ArrowRight size={16} />}
-                  </Button>
-                </div>
-              </article>
-            );
-          })}
+          {listing.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </main>
       <SiteFooter />

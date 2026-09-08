@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { BrowsingProvider } from '@/components/shop/browsing-provider';
 import { CartProvider } from '@/components/shop/cart-provider';
 export const metadata: Metadata = {
   title: 'Mania de Bicho | Pet shop e produtos para pets',
@@ -12,7 +13,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <CartProvider>{children}</CartProvider>
+        <BrowsingProvider>
+          <CartProvider>{children}</CartProvider>
+        </BrowsingProvider>
       </body>
     </html>
   );

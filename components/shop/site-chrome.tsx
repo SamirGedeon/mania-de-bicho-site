@@ -4,6 +4,8 @@
 import { storeInfo } from '@/data/store';
 import { whatsappHref } from '@/lib/whatsapp';
 import { productHref } from '@/data/products';
+import { useBrowsing } from './browsing-provider';
+import { RecentProducts } from './recent-products';
 import { StoreDetails } from './store-details';
 import { useState } from 'react';
 import {
@@ -86,6 +88,7 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
   const [contact, setContact] = useState(false);
   const [query, setQuery] = useState('');
   const { count, openCart } = useCart();
+  const { favorites } = useBrowsing();
   const results = searchable.filter((item) =>
     normalize(item.name).includes(normalize(query.trim())),
   );
@@ -125,6 +128,14 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
             ))}
           </nav>
           <div className="nav-actions">
+            <a
+              className="icon-button favorites-trigger"
+              href="/favoritos"
+              aria-label={`Ver favoritos, ${favorites.length} produtos`}
+            >
+              <Heart size={21} />
+              <sup aria-hidden="true">{favorites.length}</sup>
+            </a>
             <button
               className="icon-button cart-trigger"
               aria-label={`Abrir carrinho, ${count} itens`}
@@ -221,10 +232,13 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
     </>
   );
 }
-export function SiteFooter() {
+export function SiteFooter({
+  excludeRecentId,
+}: { excludeRecentId?: string } = {}) {
   const [contact, setContact] = useState(false);
   return (
     <>
+      <RecentProducts excludeId={excludeRecentId} />
       <StoreDetails />
       <footer id="contato">
         <a href="/" aria-label="Voltar ao início">

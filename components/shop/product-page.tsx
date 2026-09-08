@@ -1,7 +1,7 @@
 /* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
 'use client';
-import { useState } from 'react';
-import { ShoppingBag, ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ShoppingBag, ArrowLeft, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   categories,
@@ -10,12 +10,24 @@ import {
   availabilityLabel,
 } from '@/data/products';
 import type { Product } from '@/data/products';
+import { FavoriteButton } from './favorite-button';
+import { useBrowsing } from './browsing-provider';
+import { whatsappHref, productQuestion } from '@/lib/whatsapp';
+import { storeInfo } from '@/data/store';
 import { MAX_QUANTITY } from '@/lib/cart';
 import { useCart } from './cart-provider';
 import { SiteHeader, SiteFooter } from './site-chrome';
 
 export function ProductPage({ product }: { product: Product }) {
   const { items, ready, addItem } = useCart();
+  const { dispatch: browse } = useBrowsing();
+  useEffect(() => {
+    browse({ type: 'view', id: product.id });
+  }, [browse, product.id]);
+  const questionHref = whatsappHref(
+    storeInfo.whatsapp,
+    productQuestion(product),
+  );
   const photos = product.images?.length ? product.images : [product.image];
   const [photo, setPhoto] = useState(photos[0]);
   const category = categories.find((c) => c.slug === product.category)!;
@@ -68,6 +80,7 @@ export function ProductPage({ product }: { product: Product }) {
             <span className="product-brand">{product.brand}</span>
             <h1>{product.name}</h1>
             <p className="product-size">{product.size}</p>
+            <FavoriteButton id={product.id} name={product.name} withLabel />
             <span className="tag">{availabilityLabel(product)}</span>
             <p className="product-detail-description">{product.description}</p>
             <strong className="product-price">
@@ -87,6 +100,17 @@ export function ProductPage({ product }: { product: Product }) {
                   ? 'Limite de 99 unidades'
                   : 'Adicionar ao carrinho'}
             </Button>
+            {questionHref && (
+              <a
+                className="pill category-link product-question"
+                href={questionHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle size={18} />
+                Dúvida sobre este produto?
+              </a>
+            )}
             {product.availability === 'demo' && (
               <p className="demo-note">
                 Produto, foto, preço e indicações ilustrativos. Consulte a loja
@@ -118,7 +142,7 @@ export function ProductPage({ product }: { product: Product }) {
           </div>
         </div>
       </main>
-      <SiteFooter />
+      <SiteFooter excludeRecentId={product.id} />
     </>
   );
 }
