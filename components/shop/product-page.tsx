@@ -10,6 +10,7 @@ import {
   availabilityLabel,
 } from '@/data/products';
 import type { Product } from '@/data/products';
+import { ProductShare } from './product-share';
 import { FavoriteButton } from './favorite-button';
 import { useBrowsing } from './browsing-provider';
 import { whatsappHref, productQuestion } from '@/lib/whatsapp';
@@ -117,6 +118,7 @@ export function ProductPage({ product }: { product: Product }) {
                 para conhecer o catálogo disponível.
               </p>
             )}
+            <ProductShare product={product} />
             <dl className="product-specs">
               <div>
                 <dt>Peso / tamanho</dt>
@@ -142,7 +144,28 @@ export function ProductPage({ product }: { product: Product }) {
           </div>
         </div>
       </main>
-      <SiteFooter excludeRecentId={product.id} />
+      <div className="mobile-purchase-page">
+        <SiteFooter excludeRecentId={product.id} />
+      </div>
+      <aside className="mobile-purchase-bar" aria-label="Compra rápida">
+        <div>
+          <span>{product.size}</span>
+          <strong>{formatPrice(product.priceCents)}</strong>
+          {product.availability === 'demo' && <small>Demonstrativo</small>}
+        </div>
+        <Button
+          className="pill cta"
+          disabled={!ready || atLimit || product.availability === 'unavailable'}
+          onClick={() => addItem(product.id)}
+        >
+          <ShoppingBag size={18} />
+          {product.availability === 'unavailable'
+            ? 'Indisponível'
+            : atLimit
+              ? 'Limite de 99'
+              : 'Adicionar ao carrinho'}
+        </Button>
+      </aside>
     </>
   );
 }

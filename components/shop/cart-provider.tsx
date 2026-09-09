@@ -51,6 +51,35 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     store.getServerSnapshot,
   );
   const [open, setOpen] = useState(false);
+  const [undo, setUndo] = useState<{
+    items: CartItem[];
+    expires: number;
+  } | null>(null);
+  useEffect(() => {
+    if (!undo) return;
+    const timer = window.setTimeout(
+      () => setUndo(null),
+      Math.max(0, undo.expires - Date.now()),
+    );
+    return () => window.clearTimeout(timer);
+  }, [undo]);
+  function clearCart() {
+    setUndo({ items: [...items], expires: Date.now() + 15000 });
+    store.dispatch({ type: 'clear' });
+  }
+  function restoreCart() {
+    if (undo && Date.now() < undo.expires)
+      store.dispatch({ type: 'restore', items: undo.items });
+    setUndo(null);
+  }
+  const undoNotice = undo && (
+    <div className="cart-undo">
+      <output aria-live="polite">Carrinho limpo.</output>
+      <Button variant="ghost" onClick={restoreCart}>
+        Desfazer
+      </Button>
+    </div>
+  );
   const { count, totalCents } = cartTotals(items);
   const whatsapp = whatsappHref(storeInfo.whatsapp, cartMessage(items));
   const hasDemo = items.some(
@@ -81,6 +110,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+      {!open && undoNotice && (
+        <div className="cart-undo-floating">{undoNotice}</div>
+      )}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="cart-drawer" showCloseButton={false}>
           <div className="cart-heading">
@@ -102,6 +134,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               <X size={21} />
             </SheetClose>
           </div>
+          {undoNotice}
           {!items.length ? (
             <div className="cart-empty">
               <ShoppingBag size={44} strokeWidth={1.3} />
@@ -209,7 +242,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 <Button
                   variant="ghost"
                   className="clear-cart"
-                  onClick={() => store.dispatch({ type: 'clear' })}
+                  onClick={clearCart}
                 >
                   <Trash2 size={16} /> Limpar carrinho
                 </Button>

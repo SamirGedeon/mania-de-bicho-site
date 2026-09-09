@@ -24,7 +24,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
-import { categories, categoryHref, products } from '@/data/products';
+import {
+  categories,
+  categoryHref,
+  products,
+  formatPrice,
+} from '@/data/products';
 import { services } from '@/data/site-content';
 import { useCart } from './cart-provider';
 
@@ -64,7 +69,14 @@ const nav = [
   ['Categorias', '/loja/#categorias'],
   ['Contato', '/contato/'],
 ];
-const searchable = [
+const searchable: {
+  key: string;
+  name: string;
+  href: string;
+  image?: string;
+  priceCents?: number;
+  demo?: boolean;
+}[] = [
   ...categories.map((c) => ({
     key: c.slug,
     name: c.name,
@@ -72,6 +84,9 @@ const searchable = [
   })),
   ...products.map((p) => ({
     key: p.id,
+    image: p.image,
+    priceCents: p.priceCents,
+    demo: p.availability === 'demo',
     name: `${p.brand} — ${p.name} · ${p.size}`,
     href: productHref(p.id),
   })),
@@ -90,7 +105,9 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
   const { count, openCart } = useCart();
   const { favorites } = useBrowsing();
   const results = searchable.filter((item) =>
-    normalize(item.name).includes(normalize(query.trim())),
+    normalize(query.trim())
+      .split(/\s+/)
+      .every((term) => normalize(item.name).includes(term)),
   );
   return (
     <>
@@ -182,6 +199,9 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
+          <output className="search-count" aria-live="polite">
+            {results.length} resultados
+          </output>
           <div className="search-results">
             {results.length ? (
               results.map((item) => (
@@ -190,7 +210,23 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
                   href={item.href}
                   onClick={() => setSearch(false)}
                 >
-                  {item.name}
+                  {item.image && (
+                    <img
+                      className="search-thumbnail"
+                      src={item.image}
+                      alt=""
+                      width={56}
+                      height={56}
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="search-result-copy">
+                    {item.name}
+                    {item.priceCents !== undefined && (
+                      <strong>{formatPrice(item.priceCents)}</strong>
+                    )}
+                    {item.demo && <small>Produto demonstrativo</small>}
+                  </span>
                   <ArrowRight size={16} />
                 </a>
               ))
