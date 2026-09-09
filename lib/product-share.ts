@@ -2,7 +2,7 @@ import { productHref } from '../data/products.ts';
 import type { Product } from '../data/products.ts';
 // Atualize a origem se o site receber um domínio próprio.
 export const siteOrigin =
-  'https://mania-de-bicho-referencia.frbsamir.chatgpt.site';
+  'https://mania-de-bicho.frbsamir.chatgpt.site';
 export const shareProductUrl = (id: string) =>
   `${siteOrigin}${productHref(id)}`;
 export function shareProductWhatsApp(product: Product) {
