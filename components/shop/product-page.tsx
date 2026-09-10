@@ -1,6 +1,6 @@
 /* oxlint-disable next/no-img-element, next/no-html-link-for-pages */
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ShoppingBag, ArrowLeft, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,9 +8,14 @@ import {
   categoryHref,
   formatPrice,
   availabilityLabel,
+  productOptions,
+  productHref,
 } from '@/data/products';
 import type { Product } from '@/data/products';
+import { ProductGallery } from './product-gallery';
 import { ProductShare } from './product-share';
+import { CompareButton } from './compare-provider';
+import { PaymentSummary } from './payment-summary';
 import { FavoriteButton } from './favorite-button';
 import { useBrowsing } from './browsing-provider';
 import { whatsappHref, productQuestion } from '@/lib/whatsapp';
@@ -29,8 +34,6 @@ export function ProductPage({ product }: { product: Product }) {
     storeInfo.whatsapp,
     productQuestion(product),
   );
-  const photos = product.images?.length ? product.images : [product.image];
-  const [photo, setPhoto] = useState(photos[0]);
   const category = categories.find((c) => c.slug === product.category)!;
   const atLimit =
     (items.find((i) => i.productId === product.id)?.quantity ?? 0) >=
@@ -52,41 +55,35 @@ export function ProductPage({ product }: { product: Product }) {
           <span aria-current="page">{product.name}</span>
         </nav>
         <div className="product-detail">
-          <div className="product-gallery">
-            <div className="product-main-photo">
-              <img
-                src={photo}
-                alt={product.imageAlt}
-                width={640}
-                height={560}
-                fetchPriority="high"
-              />
-            </div>
-            {photos.length > 1 && (
-              <div className="product-thumbnails">
-                {photos.map((src, i) => (
-                  <button
-                    key={src}
-                    aria-label={`Ver foto ${i + 1}`}
-                    aria-pressed={photo === src}
-                    onClick={() => setPhoto(src)}
-                  >
-                    <img src={src} alt="" width={80} height={80} />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductGallery product={product} />
           <div className="product-detail-info">
             <span className="product-brand">{product.brand}</span>
             <h1>{product.name}</h1>
             <p className="product-size">{product.size}</p>
+            <fieldset className="product-options">
+              <legend>Escolha o peso / tamanho</legend>
+              <div>
+                {productOptions(product.id).map((option) => (
+                  <a
+                    className="product-option"
+                    key={option.id}
+                    href={productHref(option.id)}
+                    aria-current={option.id === product.id ? 'true' : undefined}
+                  >
+                    <strong>{option.size}</strong>
+                    <span>{formatPrice(option.priceCents)}</span>
+                    <small>{availabilityLabel(option)}</small>
+                  </a>
+                ))}
+              </div>
+            </fieldset>
             <FavoriteButton id={product.id} name={product.name} withLabel />
             <span className="tag">{availabilityLabel(product)}</span>
             <p className="product-detail-description">{product.description}</p>
             <strong className="product-price">
               {formatPrice(product.priceCents)}
             </strong>
+            <PaymentSummary totalCents={product.priceCents} />
             <Button
               className="pill cta"
               disabled={
@@ -119,6 +116,7 @@ export function ProductPage({ product }: { product: Product }) {
               </p>
             )}
             <ProductShare product={product} />
+            <CompareButton id={product.id} name={product.name} />
             <dl className="product-specs">
               <div>
                 <dt>Peso / tamanho</dt>

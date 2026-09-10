@@ -5,6 +5,7 @@ import { CatalogFilters } from './catalog-filters';
 import { emptyFilters, filterProducts } from '@/lib/catalog';
 import { ProductCard } from './product-card';
 import { PetShortcuts } from './pet-shortcuts';
+import { SearchHelp } from './search-help';
 import { ArrowLeft, Bone } from 'lucide-react';
 import { categories, categoryHref, products } from '@/data/products';
 import type { CategorySlug } from '@/data/products';
@@ -89,6 +90,7 @@ export function CategoryPage({
           <div className="catalog-no-results">
             <h2>Nenhum produto encontrado</h2>
             <p>Experimente outro termo ou limpe os filtros.</p>
+            <SearchHelp query={filters.query} />
             <Button
               className="pill cta"
               onClick={() => setFilters({ ...emptyFilters })}

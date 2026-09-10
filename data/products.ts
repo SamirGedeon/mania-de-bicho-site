@@ -1,5 +1,6 @@
 // Catálogo demonstrativo. Marcas e preços fictícios; valores em centavos de real.
 // Edite este arquivo para substituir os produtos. IDs devem ser únicos e estáveis.
+import { extraFoodOptions, optionGroups } from './product-options.ts';
 export const categories = [
   {
     slug: 'racoes-e-alimentos',
@@ -430,9 +431,20 @@ export const products: Product[] = [
   },
 ];
 export const categoryHref = (slug: CategorySlug) => `/loja/${slug}`;
+export const allProductSkus: Product[] = [
+  ...products,
+  ...extraFoodOptions.map((option) => ({
+    ...products.find((p) => p.id === option.baseId)!,
+    ...option,
+  })),
+];
 export const productById = new Map(
-  products.map((product) => [product.id, product]),
+  allProductSkus.map((product) => [product.id, product]),
 );
+export const productOptions = (id: string) =>
+  (optionGroups.find((group) => group.includes(id)) ?? [id])
+    .map((key) => productById.get(key)!)
+    .filter(Boolean);
 export const formatPrice = (cents: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
     cents / 100,

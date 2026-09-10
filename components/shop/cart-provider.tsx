@@ -22,6 +22,11 @@ import { productById, formatPrice } from '@/data/products';
 import { CART_KEY, MAX_QUANTITY, cartTotals } from '@/lib/cart';
 import type { CartAction, CartItem } from '@/lib/cart';
 import { createCartStore } from '@/lib/cart-store';
+import { CartShare } from './cart-share';
+import { PaymentInfo } from './payment-info';
+import { PaymentSummary } from './payment-summary';
+import { BuyAgain } from './buy-again';
+import { saveLastBag } from '@/lib/reorder';
 
 type CartContextValue = {
   items: CartItem[];
@@ -51,6 +56,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     store.getServerSnapshot,
   );
   const [open, setOpen] = useState(false);
+  const [reorderSaveFailed, setReorderSaveFailed] = useState(false);
   const [undo, setUndo] = useState<{
     items: CartItem[];
     expires: number;
@@ -135,6 +141,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             </SheetClose>
           </div>
           {undoNotice}
+          <BuyAgain
+            onRestore={(saved) =>
+              store.dispatch({ type: 'restore', items: saved })
+            }
+          />
+          {reorderSaveFailed && (
+            <p role="status">
+              Não foi possível guardar esta sacola neste aparelho. Você pode
+              continuar pelo WhatsApp.
+            </p>
+          )}
           {!items.length ? (
             <div className="cart-empty">
               <ShoppingBag size={44} strokeWidth={1.3} />
@@ -250,6 +267,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                   <span>Total dos produtos</span>
                   <strong>{formatPrice(totalCents)}</strong>
                 </div>
+                <PaymentSummary totalCents={totalCents} progress />
                 <p>
                   {hasDemo
                     ? 'Catálogo demonstrativo. Produtos e valores ilustrativos.'
@@ -259,6 +277,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                   <a
                     className="pill cta"
                     href={whatsapp}
+                    onClick={() => setReorderSaveFailed(!saveLastBag(items))}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -272,6 +291,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 <Button className="pill cta" onClick={() => setOpen(false)}>
                   Continuar escolhendo
                 </Button>
+                <CartShare items={items} />
+                <PaymentInfo />
               </div>
             </>
           )}

@@ -2,6 +2,7 @@
 import { MapPin, Clock3, MessageCircle } from 'lucide-react';
 import { storeInfo } from '@/data/store';
 import { whatsappHref } from '@/lib/whatsapp';
+import { PaymentInfo } from './payment-info';
 export function StoreDetails() {
   const contact = whatsappHref(storeInfo.whatsapp);
   return (
@@ -72,6 +73,7 @@ export function StoreDetails() {
           ))}
         </div>
       )}
+      <PaymentInfo />
     </section>
   );
 }

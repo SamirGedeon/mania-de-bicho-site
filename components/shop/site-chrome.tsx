@@ -6,6 +6,7 @@ import { whatsappHref } from '@/lib/whatsapp';
 import { productHref } from '@/data/products';
 import { useBrowsing } from './browsing-provider';
 import { RecentProducts } from './recent-products';
+import { SearchHelp } from './search-help';
 import { StoreDetails } from './store-details';
 import { useState } from 'react';
 import {
@@ -148,10 +149,17 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
             <a
               className="icon-button favorites-trigger"
               href="/favoritos"
-              aria-label={`Ver favoritos, ${favorites.length} produtos`}
+              aria-label={`Ver favoritos, ${favorites.length} ${favorites.length === 1 ? 'produto' : 'produtos'}`}
             >
-              <Heart size={21} />
-              <sup aria-hidden="true">{favorites.length}</sup>
+              <Heart
+                size={21}
+                fill={favorites.length ? 'currentColor' : 'none'}
+              />
+              {favorites.length > 0 && (
+                <span className="header-count" aria-hidden="true">
+                  {favorites.length > 99 ? '99+' : favorites.length}
+                </span>
+              )}
             </a>
             <button
               className="icon-button cart-trigger"
@@ -231,7 +239,7 @@ export function SiteHeader({ shop = false }: { shop?: boolean }) {
                 </a>
               ))
             ) : (
-              <p>Nenhum resultado encontrado. Tente outro termo.</p>
+              <SearchHelp query={query} />
             )}
           </div>
         </DialogContent>

@@ -2,6 +2,7 @@ import { productById, formatPrice } from '../data/products.ts';
 import { cartTotals } from './cart.ts';
 import type { CartItem } from './cart.ts';
 import type { Product } from '../data/products.ts';
+import { paymentTotals } from './payments.ts';
 
 export function productQuestion(product: Product) {
   return `Olá, Mania de Bicho! Tenho uma dúvida sobre ${product.brand} — ${product.name} (${product.size}), referência ${product.id}.${product.availability === 'demo' ? '\nVi este item no catálogo demonstrativo. Podem me informar as opções reais disponíveis?' : '\nPodem me ajudar com mais informações sobre este produto?'}`;
@@ -17,6 +18,8 @@ export function whatsappHref(
 }
 export function cartMessage(items: CartItem[]) {
   const valid = items.filter((item) => productById.has(item.productId));
+  const totalCents = cartTotals(valid).totalCents;
+  const payment = paymentTotals(totalCents);
   const demo = valid.some(
     (item) => productById.get(item.productId)!.availability === 'demo',
   );
@@ -31,7 +34,18 @@ export function cartMessage(items: CartItem[]) {
       return `${item.quantity}x ${p.brand} — ${p.name} (${p.size})${p.availability === 'unavailable' ? ' — INDISPONÍVEL, consultar alternativa' : ''}\nUnitário: ${formatPrice(p.priceCents)} | Subtotal: ${formatPrice(p.priceCents * item.quantity)}`;
     }),
     '',
-    `Total dos produtos: ${formatPrice(cartTotals(valid).totalCents)}`,
+    `Total dos produtos: ${formatPrice(totalCents)}`,
+    ...(payment.discountCents > 0
+      ? [
+          `No Pix ou dinheiro: ${formatPrice(payment.cashTotalCents)} (5% de desconto; economia de ${formatPrice(payment.discountCents)}).`,
+          `No débito ou crédito: ${formatPrice(totalCents)}.`,
+        ]
+      : []),
+    ...(payment.installmentEligible
+      ? [
+          'Parcelamento no crédito disponível. Gostaria de consultar número de parcelas e juros.',
+        ]
+      : []),
     'Podem confirmar disponibilidade, valores e opções de entrega ou retirada? O envio desta mensagem não confirma a compra.',
   ].join('\n');
 }

@@ -7,6 +7,7 @@ import type { Product } from '@/data/products';
 import { MAX_QUANTITY } from '@/lib/cart';
 import { useCart } from './cart-provider';
 import { FavoriteButton } from './favorite-button';
+import { CompareButton } from './compare-provider';
 export function ProductCard({ product }: { product: Product }) {
   const { addItem, items, ready } = useCart();
   const atLimit =
@@ -52,6 +53,7 @@ export function ProductCard({ product }: { product: Product }) {
               : 'Adicionar ao carrinho'}
           {!atLimit && <ArrowRight size={16} />}
         </Button>
+        <CompareButton id={product.id} name={product.name} />
       </div>
     </article>
   );
