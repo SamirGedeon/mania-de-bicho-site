@@ -25,6 +25,8 @@ import { createCartStore } from '@/lib/cart-store';
 import { CartShare } from './cart-share';
 import { PaymentInfo } from './payment-info';
 import { PaymentSummary } from './payment-summary';
+import { PaymentChoice } from './payment-choice';
+import type { PaymentMethod } from '@/lib/payments';
 import { BuyAgain } from './buy-again';
 import { saveLastBag } from '@/lib/reorder';
 
@@ -56,6 +58,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     store.getServerSnapshot,
   );
   const [open, setOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null,
+  );
   const [reorderSaveFailed, setReorderSaveFailed] = useState(false);
   const [undo, setUndo] = useState<{
     items: CartItem[];
@@ -87,7 +92,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     </div>
   );
   const { count, totalCents } = cartTotals(items);
-  const whatsapp = whatsappHref(storeInfo.whatsapp, cartMessage(items));
+  const whatsapp = paymentMethod
+    ? whatsappHref(storeInfo.whatsapp, cartMessage(items, paymentMethod))
+    : null;
   const hasDemo = items.some(
     (i) => productById.get(i.productId)?.availability === 'demo',
   );
@@ -268,11 +275,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                   <strong>{formatPrice(totalCents)}</strong>
                 </div>
                 <PaymentSummary totalCents={totalCents} progress />
+                <PaymentChoice
+                  value={paymentMethod}
+                  onChange={setPaymentMethod}
+                  totalCents={totalCents}
+                />
                 <p>
                   {hasDemo
                     ? 'Catálogo demonstrativo. Produtos e valores ilustrativos.'
                     : 'Disponibilidade e entrega serão confirmadas pela loja.'}
                 </p>
+                {!paymentMethod && (
+                  <Button className="pill cta" disabled>
+                    Escolha a forma de pagamento
+                  </Button>
+                )}
                 {whatsapp && (
                   <a
                     className="pill cta"
