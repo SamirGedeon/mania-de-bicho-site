@@ -16,8 +16,7 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { storeInfo } from '@/data/store';
-import { cartMessage, whatsappHref } from '@/lib/whatsapp';
+
 import { productById, formatPrice } from '@/data/products';
 import { CART_KEY, MAX_QUANTITY, cartTotals } from '@/lib/cart';
 import type { CartAction, CartItem } from '@/lib/cart';
@@ -26,6 +25,7 @@ import { CartShare } from './cart-share';
 import { PaymentInfo } from './payment-info';
 import { PaymentSummary } from './payment-summary';
 import { PaymentChoice } from './payment-choice';
+import { OrderReview } from './order-review';
 import type { PaymentMethod } from '@/lib/payments';
 import { BuyAgain } from './buy-again';
 import { saveLastBag } from '@/lib/reorder';
@@ -92,9 +92,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     </div>
   );
   const { count, totalCents } = cartTotals(items);
-  const whatsapp = paymentMethod
-    ? whatsappHref(storeInfo.whatsapp, cartMessage(items, paymentMethod))
-    : null;
   const hasDemo = items.some(
     (i) => productById.get(i.productId)?.availability === 'demo',
   );
@@ -285,22 +282,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     ? 'Catálogo demonstrativo. Produtos e valores ilustrativos.'
                     : 'Disponibilidade e entrega serão confirmadas pela loja.'}
                 </p>
-                {!paymentMethod && (
-                  <Button className="pill cta" disabled>
-                    Escolha a forma de pagamento
-                  </Button>
-                )}
-                {whatsapp && (
-                  <a
-                    className="pill cta"
-                    href={whatsapp}
-                    onClick={() => setReorderSaveFailed(!saveLastBag(items))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Enviar carrinho pelo WhatsApp ↗
-                  </a>
-                )}
+                <OrderReview
+                  items={items}
+                  method={paymentMethod}
+                  totalCents={totalCents}
+                  onSend={() => setReorderSaveFailed(!saveLastBag(items))}
+                />
                 <p>
                   O WhatsApp abrirá com sua mensagem pronta. Revise e envie para
                   a loja.

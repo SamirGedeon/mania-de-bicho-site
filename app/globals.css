@@ -2849,3 +2849,136 @@ body:has([data-slot='sheet-overlay']) {
 .cart-summary .payment-choice strong {
   font-size: 20px;
 }
+.order-details {
+  margin: 20px 0;
+  display: grid;
+  gap: 10px;
+}
+.order-details > label,
+.cash-details > label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.order-details textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.order-details small {
+  font-size: 12px;
+  text-align: right;
+}
+.cash-details {
+  display: grid;
+  gap: 10px;
+}
+.cash-details [data-slot='radio-group'] {
+  display: flex;
+  gap: 24px;
+}
+.cash-details [data-slot='radio-group'] label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+.order-review-dialog,
+.bed-guide-dialog {
+  width: min(620px, calc(100vw - 24px)) !important;
+  max-width: 620px !important;
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.review-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.review-heading h2 {
+  font-size: 24px;
+  line-height: 1.3;
+}
+.review-heading button {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+}
+.review-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.review-items li {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #105a3d25;
+}
+.review-items img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.review-notes {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.order-review-dialog > .pill {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+  text-align: center;
+  white-space: normal;
+}
+.bed-guide-trigger {
+  min-height: 44px;
+  margin: 10px 0;
+}
+.bed-guide-dialog ol {
+  list-style: decimal;
+  padding-left: 22px;
+}
+.bed-guide-dialog li {
+  margin: 8px 0;
+}
+.measurement-diagram {
+  background: #105a3d08;
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+}
+.measurement-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  border: 2px dashed #105a3d70;
+  min-height: 120px;
+  margin-top: 12px;
+}
+.guide-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.guide-inputs label {
+  display: grid;
+  gap: 8px;
+}
+.guide-options a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+@media (max-width: 480px) {
+  .order-review-dialog,
+  .bed-guide-dialog {
+    padding: 16px;
+  }
+  .guide-inputs {
+    grid-template-columns: 1fr;
+  }
+}

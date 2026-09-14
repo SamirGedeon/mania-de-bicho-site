@@ -13,6 +13,7 @@ import {
 } from '@/data/products';
 import type { Product } from '@/data/products';
 import { ProductGallery } from './product-gallery';
+import { BedSizeGuide } from './bed-size-guide';
 import { ProductShare } from './product-share';
 import { CompareButton } from './compare-provider';
 import { PaymentSummary } from './payment-summary';
@@ -77,6 +78,9 @@ export function ProductPage({ product }: { product: Product }) {
                 ))}
               </div>
             </fieldset>
+            {product.category === 'camas-e-conforto' && (
+              <BedSizeGuide id={product.id} />
+            )}
             <FavoriteButton id={product.id} name={product.name} withLabel />
             <span className="tag">{availabilityLabel(product)}</span>
             <p className="product-detail-description">{product.description}</p>

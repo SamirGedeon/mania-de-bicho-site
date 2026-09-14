@@ -8,6 +8,8 @@ import {
   selectedPaymentTotal,
 } from './payments.ts';
 import type { PaymentMethod } from './payments.ts';
+import { cashCents, changeError } from './order-details.ts';
+import type { OrderDetails } from './order-details.ts';
 
 export function productQuestion(product: Product) {
   return `Olá, Mania de Bicho! Tenho uma dúvida sobre ${product.brand} — ${product.name} (${product.size}), referência ${product.id}.${product.availability === 'demo' ? '\nVi este item no catálogo demonstrativo. Podem me informar as opções reais disponíveis?' : '\nPodem me ajudar com mais informações sobre este produto?'}`;
@@ -21,7 +23,11 @@ export function whatsappHref(
   if (!/^55\d{10,11}$/.test(digits)) return null;
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }
-export function cartMessage(items: CartItem[], method?: PaymentMethod) {
+export function cartMessage(
+  items: CartItem[],
+  method?: PaymentMethod,
+  details?: OrderDetails,
+) {
   const valid = items.filter((item) => productById.has(item.productId));
   const totalCents = cartTotals(valid).totalCents;
   const payment = paymentTotals(totalCents);
@@ -59,6 +65,18 @@ export function cartMessage(items: CartItem[], method?: PaymentMethod) {
     ...(payment.installmentEligible && (!method || method === 'credit')
       ? [
           'Parcelamento no crédito disponível. Gostaria de consultar número de parcelas e juros.',
+        ]
+      : []),
+    ...(details?.notes.trim()
+      ? [`Observações: ${details.notes.trim().slice(0, 500)}`]
+      : []),
+    ...(method === 'cash' &&
+    details &&
+    !changeError(details, selectedPaymentTotal(totalCents, 'cash').totalCents)
+      ? [
+          details.needsChange
+            ? `Troco para: ${formatPrice(cashCents(details.cashAmount)!)}. Troco previsto: ${formatPrice(cashCents(details.cashAmount)! - selectedPaymentTotal(totalCents, 'cash').totalCents)}.`
+            : 'Não preciso de troco.',
         ]
       : []),
     'Podem confirmar disponibilidade, valores e opções de entrega ou retirada? O envio desta mensagem não confirma a compra.',
